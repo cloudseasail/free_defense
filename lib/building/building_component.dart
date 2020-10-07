@@ -1,6 +1,6 @@
 import 'package:flame/position.dart';
 import 'package:flutter/material.dart';
-import 'package:mindcraft/base/game_component.dart';
+import 'package:freedefense/base/game_component.dart';
 
 class BuildingComponent extends GameComponent {
   double life;

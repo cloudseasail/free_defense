@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/position.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:mindcraft/base/game_component.dart';
+import 'package:freedefense/base/game_component.dart';
 
 class ObjectSensor<T extends GameComponent> extends GameComponent {
   bool _active = false;

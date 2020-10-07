@@ -4,11 +4,11 @@ import 'dart:ui';
 import 'package:flame/position.dart';
 import 'package:flame/time.dart';
 import 'package:flutter/gestures.dart';
-import 'package:mindcraft/base/flame_game.dart';
-import 'package:mindcraft/base/object_sensor.dart';
-import 'package:mindcraft/building/weapon/cannon_view.dart';
-import 'package:mindcraft/bullet/cannon_bullet.dart';
-import 'package:mindcraft/enemy/enemy_component.dart';
+import 'package:freedefense/base/flame_game.dart';
+import 'package:freedefense/base/object_sensor.dart';
+import 'package:freedefense/building/weapon/cannon_view.dart';
+import 'package:freedefense/bullet/cannon_bullet.dart';
+import 'package:freedefense/enemy/enemy_component.dart';
 
 class Cannon extends CannonView {
   bool _preview = true;

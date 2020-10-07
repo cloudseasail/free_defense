@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flame/position.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:mindcraft/base/smart_rotation_effect.dart';
-import 'package:mindcraft/base/game_component.dart';
-import 'package:mindcraft/building/weapon/weapon_component.dart';
+import 'package:freedefense/base/smart_rotation_effect.dart';
+import 'package:freedefense/base/game_component.dart';
+import 'package:freedefense/building/weapon/weapon_component.dart';
 
 class BarrelView extends GameComponent {
   Sprite barrelSprite;

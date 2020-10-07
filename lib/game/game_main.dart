@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:flame/flame.dart';
 import 'package:flutter/gestures.dart';
-import 'package:mindcraft/base/flame_game.dart';
-import 'package:mindcraft/base/game_component.dart';
-import 'package:mindcraft/game/game_controller.dart';
-import 'package:mindcraft/game/game_setting.dart';
-import 'package:mindcraft/game/game_view.dart';
-import 'package:mindcraft/map/easy_map.dart';
-import 'package:mindcraft/map/map_tile_component.dart';
+import 'package:freedefense/base/flame_game.dart';
+import 'package:freedefense/game/game_controller.dart';
+import 'package:freedefense/game/game_setting.dart';
+import 'package:freedefense/game/game_view.dart';
+import 'package:freedefense/map/easy_map.dart';
+
+import 'enemy_spawner.dart';
 
 class GameMain extends FlameGame {
   EasyMap easyMap;
@@ -16,6 +16,7 @@ class GameMain extends FlameGame {
   GameView view = GameView();
   GameSetting setting = GameSetting();
   GameController controller = GameController();
+  EnemySpawner enemySpawner = EnemySpawner();
 
   bool recordFps() => true;
 
@@ -24,6 +25,11 @@ class GameMain extends FlameGame {
   }
 
   void initialize() async {
+    await Flame.init(
+      fullScreen: true,
+      // orientation: DeviceOrientation.portraitUp,
+    );
+
     resize(await Flame.util.initialDimensions());
     easyMap = EasyMap(
         tileSize: setting.tileSize,
@@ -31,6 +37,7 @@ class GameMain extends FlameGame {
         mapSize: setting.mapSize);
     easyMap.registerToGame(this);
     controller.registerToGame(this);
+    enemySpawner.registerToGame(this);
   }
 
   void resize(Size size) {
@@ -40,7 +47,6 @@ class GameMain extends FlameGame {
 
   @override
   void update(double t) {
-    // TODO: implement update
     super.update(t);
     if (recordFps()) {
       double _fps = fps();
@@ -50,13 +56,6 @@ class GameMain extends FlameGame {
     //     .where((o) => o is! MapTileComponent)
     //     .where((o) => o is! EasyMap);
     // print(test.length);
-  }
-
-  @override
-  void render(Canvas canvas) {
-    // TODO: implement render
-    super.render(canvas);
-    this.canvas = canvas;
   }
 
   void onTapDown(TapDownDetails details) {

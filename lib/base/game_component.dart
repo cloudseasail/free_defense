@@ -5,9 +5,9 @@ import 'package:flame/components/mixins/has_game_ref.dart';
 import 'package:flame/position.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Animation;
-import 'package:mindcraft/base/flame_game.dart';
-import 'package:mindcraft/base/rect_component.dart';
-import 'package:mindcraft/game/game_main.dart';
+import 'package:freedefense/base/flame_game.dart';
+import 'package:freedefense/base/rect_component.dart';
+import 'package:freedefense/game/game_main.dart';
 
 enum GestureType {
   Tap,

@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/position.dart';
 import 'package:flutter/gestures.dart';
-import 'package:mindcraft/bullet/cannon_bullet.dart';
-import 'package:mindcraft/building/weapon/cannon.dart';
-import 'package:mindcraft/enemy/enemyA.dart';
-import 'package:mindcraft/game/game_main.dart';
+import 'package:freedefense/bullet/cannon_bullet.dart';
+import 'package:freedefense/building/weapon/cannon.dart';
+import 'package:freedefense/enemy/enemyA.dart';
+import 'package:freedefense/game/game_main.dart';
 
 class GameTest extends GameMain {
   Cannon cannon;

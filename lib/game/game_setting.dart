@@ -1,3 +1,4 @@
+import 'package:flame/position.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameSetting {
@@ -17,6 +18,8 @@ class GameSetting {
 
   Size enemySizeCale = Size(0.7, 0.7);
   Size enemySize;
+  Position enemyTarget;
+  double enemySpeed = 100;
 
   Size screenSize;
   Size tileSize;
@@ -36,5 +39,9 @@ class GameSetting {
     enemySize = dotMultiple(enemySizeCale, tileSize);
 
     cannonRange = cannonRangeScale * (tileSize.width + tileSize.height) / 2;
+
+    enemyTarget = Position.fromSize(mapSize) - Position.fromSize(tileSize / 2);
+
+    print('screenSize $screenSize,  tileSize $tileSize');
   }
 }

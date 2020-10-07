@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flame/position.dart';
 import 'package:flutter/material.dart';
-import 'package:mindcraft/base/flame_game.dart';
-import 'package:mindcraft/base/object_sensor.dart';
-import 'package:mindcraft/bullet/cannon_bullet_view.dart';
-import 'package:mindcraft/enemy/enemy_component.dart';
+import 'package:freedefense/base/flame_game.dart';
+import 'package:freedefense/base/object_sensor.dart';
+import 'package:freedefense/bullet/cannon_bullet_view.dart';
+import 'package:freedefense/enemy/enemy_component.dart';
 
 class CannonBullet extends CannonBulletView {
   ObjectSensor sensor;
@@ -19,8 +19,6 @@ class CannonBullet extends CannonBulletView {
       this.damage})
       : super(initPosition: initPosition, size: size, angle: angle) {
     addSensor();
-
-    // TODO: remove after out of range
   }
 
   set position(Position p) {

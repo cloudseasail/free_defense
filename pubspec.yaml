@@ -1,4 +1,4 @@
-name: mindcraft
+name: freedefense
 description: Flame sample game showcasing particle effects
 
 version: 1.0.0
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^0.26.0
+  flame: ^0.27.0
   flame_tiled: ^0.1.0
 
 dev_dependencies:

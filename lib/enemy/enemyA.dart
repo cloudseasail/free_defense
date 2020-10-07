@@ -1,15 +1,15 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flame/spritesheet.dart';
-import 'package:mindcraft/base/game_component.dart';
-import 'package:mindcraft/enemy/enemy_component.dart';
+import 'package:freedefense/enemy/enemy_component.dart';
 import 'package:flame/position.dart';
 
-class EnemyA extends GameComponent with EnemyComponent {
+class EnemyA extends EnemyComponent {
   EnemyA({
     Position initPosition,
     Size size,
     double life,
-  }) : super(initPosition: initPosition, size: size) {
+  }) : super(initPosition: initPosition, size: size, life: life) {
     final spriteSheet = SpriteSheet(
       imageName: 'enemy/enemyA.png',
       textureWidth: 89,
@@ -20,5 +20,11 @@ class EnemyA extends GameComponent with EnemyComponent {
     animation = spriteSheet.createAnimation(0, stepTime: 0.1, to: 2);
     this.life = life;
     this.maxLife = life;
+  }
+
+  void moveTo(Position to, [Function onFinish]) {
+    super.moveTo(to, onFinish);
+    /*fix angle */
+    angle = angle - (pi / 2);
   }
 }

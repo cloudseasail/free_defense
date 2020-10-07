@@ -1,8 +1,8 @@
 import 'package:flame/position.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:mindcraft/base/game_component.dart';
-import 'package:mindcraft/base/moving_component.dart';
+import 'package:freedefense/base/game_component.dart';
+import 'package:freedefense/base/moving_component.dart';
 
 class CannonBulletView extends GameComponent with MovingComponent {
   Sprite bulletSprite;
@@ -27,5 +27,11 @@ class CannonBulletView extends GameComponent with MovingComponent {
       super.render(c);
       bulletSprite.renderRect(c, area);
     }
+  }
+
+  @override
+  void update(double t) {
+    super.update(t);
+    moveUpdate(t);
   }
 }

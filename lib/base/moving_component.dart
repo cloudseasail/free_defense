@@ -1,11 +1,11 @@
 import 'package:flame/position.dart';
-import 'package:mindcraft/base/game_component.dart';
+import 'package:freedefense/base/game_component.dart';
 import 'dart:math';
 
 mixin MovingComponent on GameComponent {
   double speed;
   Function onMoveFinish;
-  bool _finish = false;
+  bool _finish = true;
   // final Curve curve = Curves.linear;
   // double get progress => curve.transform(progress);
 
@@ -15,6 +15,14 @@ mixin MovingComponent on GameComponent {
 
   // MovingComponent({@required Position initPosition, Size size})
   //     : super(initPosition: initPosition, size: size);
+
+  double absoluteRadiansFromPosition(Position target) {
+    double radians = acos((-target.y + position.y) / position.distance(target));
+    if (target.x < position.x) {
+      radians = pi * 2 - radians;
+    }
+    return radians;
+  }
 
   void moveTo(Position to, [Function onFinish]) {
     moveFromTo(position, to, onFinish);
@@ -30,10 +38,11 @@ mixin MovingComponent on GameComponent {
     _movedLength = 0;
     _finish = false;
     onMoveFinish = onFinish;
+    angle = absoluteRadiansFromPosition(to);
   }
 
-  void update(double t) {
-    super.update(t);
+  void moveUpdate(double t) {
+    // super.update(t);
     if (!_finish) {
       /*finish on the next tick,  to make sure the position is able to be sensored*/
       if (_movedLength > _totalLength) {
