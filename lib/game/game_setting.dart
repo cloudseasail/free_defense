@@ -4,22 +4,22 @@ import 'package:flutter/cupertino.dart';
 class GameSetting {
   Size mapScale = Size(6, 12);
   Size mapSize;
-  Size cannonScale = Size(1, 1);
+  Size cannonScale = Size(0.9, 0.9);
   Size cannonSize;
   double cannonLife = 100;
   double cannonRangeScale = 3;
   double cannonRange;
   double cannonFireInterval = 0.4; //s
 
-  Size cannonBulletScale = Size(0.06, 0.12);
+  Size cannonBulletScale = Size(0.1, 0.18);
   Size cannonBulletSize;
-  double cannonBulletSpeed = 500;
+  double cannonBulletSpeed = 400;
   double cannonBulletDamage = 10;
 
-  Size enemySizeCale = Size(0.7, 0.7);
+  Size enemySizeCale = Size(0.5, 0.5);
   Size enemySize;
   Position enemyTarget;
-  double enemySpeed = 100;
+  double enemySpeed = 80;
 
   Size screenSize;
   Size tileSize;

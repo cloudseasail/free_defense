@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flame/position.dart';
 import 'package:freedefense/base/game_component.dart';
 
+import 'game_component.dart';
+
 class ObjectSensor<T extends GameComponent> extends GameComponent {
   bool _active = false;
   Function onSensed;
@@ -22,13 +24,20 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
     if (active) {
       Iterable<GameComponent> intrestedObjects =
           objects.where((element) => element is T);
-      GameComponent firstObject = intrestedObjects.firstWhere(
-          (o) => (this.position.distance(o.position) <= range),
-          orElse: () => null);
+      GameComponent firstObject = intrestedObjects
+          .firstWhere((o) => collisionDetect(o), orElse: () => null);
       if (onSensed != null && firstObject != null) {
         onSensed(firstObject as T);
       }
     }
+  }
+
+  /*target size/2 */
+  bool collisionDetect(GameComponent o) {
+    Size collisionSize = o.size / 4.0;
+    double collisionDistance =
+        (collisionSize.width + collisionSize.height) / 2.0;
+    return this.position.distance(o.position) <= (range + collisionDistance);
   }
 
   // void update(double t) {}

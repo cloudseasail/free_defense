@@ -47,6 +47,7 @@ class CannonBullet extends CannonBulletView {
       sensor.active = false;
       enemy.receiveDamage(damage);
       this.remove();
+      addExplosion();
     }
 
     sensor = ObjectSensor<EnemyComponent>(initPosition = position, size = size,

@@ -13,7 +13,7 @@ class BarrelView extends GameComponent {
 
   BarrelView(this.cannonView)
       : super(initPosition: cannonView.position, size: cannonView.size) {
-    barrelSprite = Sprite('cannon/Cannon.png');
+    barrelSprite = loadedImage('cannon/Cannon.png');
   }
 
   @override
@@ -43,7 +43,7 @@ class CannonView extends WeaponComponent {
     double life = 100,
   }) : super(initPosition: initPosition, size: size, life: life) {
     barrelView = BarrelView(this);
-    towerSprite = Sprite('cannon/Tower.png');
+    towerSprite = loadedImage('cannon/Tower.png');
   }
 
   void setPreview(bool p) {

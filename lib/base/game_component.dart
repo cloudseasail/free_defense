@@ -2,7 +2,9 @@ import 'dart:ui';
 import 'package:flame/animation.dart';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/has_game_ref.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/position.dart';
+import 'package:flame/sprite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Animation;
 import 'package:freedefense/base/flame_game.dart';
@@ -86,6 +88,9 @@ class GameComponent extends PositionComponent
   bool offsetInArea(Offset p) {
     return area.contains(p);
   }
+
+  loadedImage(imagePath) =>
+      Sprite.fromImage(Flame.images.loadedFiles[imagePath].loadedImage);
 
   void onTap() {}
 

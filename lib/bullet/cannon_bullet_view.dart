@@ -3,6 +3,7 @@ import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/moving_component.dart';
+import 'package:freedefense/bullet/explosion.dart';
 
 class CannonBulletView extends GameComponent with MovingComponent {
   Sprite bulletSprite;
@@ -10,7 +11,7 @@ class CannonBulletView extends GameComponent with MovingComponent {
 
   CannonBulletView({@required Position initPosition, Size size, double angle})
       : super(initPosition: initPosition, size: size) {
-    bulletSprite = Sprite('cannon/Bullet_Cannon.png');
+    bulletSprite = loadedImage('cannon/Bullet_Cannon.png');
     this.angle = angle;
     this.speed = 500;
   }
@@ -19,6 +20,13 @@ class CannonBulletView extends GameComponent with MovingComponent {
 
   void show() {
     visible = true;
+  }
+
+  void addExplosion() {
+    double expSize = (size.width + size.height) * 3;
+    Explosion exp =
+        Explosion(initPosition: position, size: Size(expSize, expSize));
+    exp.registerToGame(gameRef);
   }
 
   void render(Canvas c) {

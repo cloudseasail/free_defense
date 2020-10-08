@@ -9,7 +9,7 @@ import '../enemy/enemyA.dart';
 class EnemySpawner extends GameComponent {
   Timer spawnTimer;
   EnemySpawner() : super(initPosition: Position(0, 0), size: Size(0, 0)) {
-    spawnTimer = Timer(2, repeat: true, callback: spawn);
+    spawnTimer = Timer(5, repeat: true, callback: spawn);
     spawnTimer.start();
   }
   void spawn() {

@@ -22,6 +22,7 @@ void main() async {
     'cannon/Cannon.png',
     'cannon/Bullet_Cannon.png',
     'enemy/enemyA.png',
+    'cannon/boom3.png',
   ]);
   runApp(game.widget);
 }
