@@ -84,7 +84,8 @@ class GameController extends GameComponent {
     }).cast();
 
     enemies = visableComponents
-        .where((element) => (element is EnemyComponent))
+        .where(
+            (element) => (element is EnemyComponent) && element.dead == false)
         .cast();
 
     sensors =

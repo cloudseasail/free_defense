@@ -51,7 +51,7 @@ class CannonBullet extends CannonBulletView {
     }
 
     sensor = ObjectSensor<EnemyComponent>(initPosition = position, size = size,
-        range = max(size.width, size.height), onSensed);
+        range = min(size.width, size.height), onSensed);
     sensor.active = true;
   }
 }

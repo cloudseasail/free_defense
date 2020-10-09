@@ -5,13 +5,13 @@ import 'package:flame/position.dart';
 import 'package:freedefense/astar/astarnode.dart';
 import 'package:freedefense/base/game_component.dart';
 
-import '../base/flame_game.dart';
 import '../base/moving_component.dart';
 
 class EnemyComponent extends GameComponent with MovingComponent {
   double life;
   double maxLife;
   double speed;
+  bool dead = false;
 
   EnemyComponent({
     Position initPosition,
@@ -21,20 +21,21 @@ class EnemyComponent extends GameComponent with MovingComponent {
     maxLife = life;
   }
 
-  void registerToGame(FlameGame gameRef, {bool later = false}) {
-    super.registerToGame(gameRef, later: later);
-    speed = this.gameRef.setting.enemySpeed;
-  }
-
   void setType(String name) {}
+
+  bool scanable() => !dead;
 
   @override
   void update(double t) {
     super.update(t);
-    moveUpdate(t);
+
     if (life < 0) {
-      this.remove();
-      gameRef.controller.onEnemyKilled();
+      if (!dead) onKilled();
+      dead = true;
+    }
+
+    if (!dead) {
+      moveUpdate(t);
     }
   }
 
@@ -43,7 +44,14 @@ class EnemyComponent extends GameComponent with MovingComponent {
   }
 
   void reachTarget() {
-    gameRef.controller.onEnemyMissed();
+    if (!dead) {
+      gameRef.controller.onEnemyMissed();
+      this.remove();
+    }
+  }
+
+  void onKilled() {
+    gameRef.controller.onEnemyKilled();
     this.remove();
   }
 

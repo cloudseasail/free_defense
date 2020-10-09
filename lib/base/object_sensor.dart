@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flame/position.dart';
-import 'package:flame/time.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freedefense/base/game_component.dart';
+import 'package:freedefense/game/game_util.dart';
 
 import 'game_component.dart';
 
@@ -10,7 +11,7 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
   bool _active = false;
   Function onSensed;
   double range;
-  Timer cdTimer;
+  TimerComponent cdTimer;
   // double range;
   ObjectSensor(Position initPosition, Size size, this.range, this.onSensed)
       : super(initPosition: initPosition, size: size) {
@@ -30,9 +31,20 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
   get active => _active;
 
   void scan(Iterable<GameComponent> objects) {
+    bool scanable(GameComponent element) {
+      bool rt = false;
+      if (element is T) {
+        rt = true;
+        if (element.scanable != null) {
+          rt = element.scanable();
+        }
+      }
+      return rt;
+    }
+
     if (active) {
       Iterable<GameComponent> intrestedObjects =
-          objects.where((element) => element is T);
+          objects.where((element) => scanable(element));
       GameComponent firstObject = intrestedObjects
           .firstWhere((o) => collisionDetect(o), orElse: () => null);
       if (onSensed != null && firstObject != null) {
@@ -51,14 +63,6 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
 
   void coolDown(double time) {
     active = false;
-    cdTimer = Timer(time, callback: () => active = true);
-    cdTimer.start();
+    cdTimer = gameRef.util.timer(time, callback: () => active = true).start();
   }
-
-  void update(double t) {
-    if (cdTimer != null) {
-      cdTimer.update(t);
-    }
-  }
-  // void render(Canvas c) {}
 }

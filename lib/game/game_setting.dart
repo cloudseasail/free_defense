@@ -2,7 +2,7 @@ import 'package:flame/position.dart';
 import 'package:flutter/cupertino.dart';
 
 class GameSetting {
-  Size mapScale = Size(9, 15);
+  Size mapScale = Size(6, 9);
   Size mapSize;
   Size cannonScale = Size(0.9, 0.9);
   Size cannonSize;

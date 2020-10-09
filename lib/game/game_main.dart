@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:freedefense/base/flame_game.dart';
 import 'package:freedefense/game/game_controller.dart';
 import 'package:freedefense/game/game_setting.dart';
+import 'package:freedefense/game/game_util.dart';
 import 'package:freedefense/game/game_view.dart';
 import 'package:freedefense/game/status_bar.dart';
 import 'package:freedefense/map/easy_map.dart';
@@ -13,12 +14,14 @@ import 'enemy_spawner.dart';
 class GameMain extends FlameGame {
   EasyMap easyMap;
   Canvas canvas;
+  bool started = false;
 
   GameView view = GameView();
   GameSetting setting = GameSetting();
   GameController controller = GameController();
   EnemySpawner enemySpawner = EnemySpawner();
   StatusBar statusBar;
+  GameUtil util;
 
   bool recordFps() => true;
 
@@ -33,6 +36,8 @@ class GameMain extends FlameGame {
     );
 
     resize(await Flame.util.initialDimensions());
+    util = GameUtil(this);
+
     easyMap = EasyMap(
         tileSize: setting.tileSize,
         mapScale: setting.mapScale,
@@ -42,8 +47,8 @@ class GameMain extends FlameGame {
 
     easyMap.registerToGame(this);
     controller.registerToGame(this);
-    enemySpawner.registerToGame(this);
     statusBar.registerToGame(this);
+    enemySpawner.registerToGame(this);
   }
 
   void resize(Size size) {
@@ -65,8 +70,13 @@ class GameMain extends FlameGame {
   }
 
   void onTapDown(TapDownDetails details) {
-    // recordTime();
-    super.onTapDown(details);
+    if (!started) {
+      started = true;
+      statusBar.removeStartIndicator();
+      enemySpawner.start();
+    } else {
+      super.onTapDown(details);
+    }
   }
 
   int currentTimeMillis() {

@@ -4,21 +4,21 @@ import 'package:freedefense/enemy/enemyV1.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
 import 'package:flame/position.dart';
 
-class EnemyA extends EnemyComponent with EnemyV1 {
-  EnemyA({
+class EnemyB extends EnemyComponent with EnemyV1 {
+  EnemyB({
     Position initPosition,
     Size size,
     double life = 100,
   }) : super(initPosition: initPosition, size: size, life: life) {
     this.life = life;
     this.maxLife = life;
-    initSpriteSheet('enemy/enemyA.png');
+    initSpriteSheet('enemy/enemyB.png');
   }
   @override
   void initialize() {
     setLiveAnimation();
-    life = 80;
-    speed = 50;
-    size = size * 0.8;
+    life = 150;
+    speed = 60;
+    size = size * 1.0;
   }
 }

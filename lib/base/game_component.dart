@@ -31,6 +31,9 @@ class GameComponent extends PositionComponent
 
   int priority() => 100;
 
+  /* can be scaned */
+  bool scanable() => true;
+
   GameComponent({this.initPosition, Size size}) {
     //use clone to avoid another  component ref to same position and causing corruption.
     position = initPosition.clone();
@@ -73,12 +76,14 @@ class GameComponent extends PositionComponent
     registeredGestures.remove(gestureType);
   }
 
+  void initialize() {}
   void registerToGame(FlameGame gameRef, {bool later = false}) {
     if (later) {
       gameRef.addLater(this);
     } else {
       gameRef.add(this);
     }
+    initialize();
   }
 
   bool gestureHandlable(GestureType gestureType) {

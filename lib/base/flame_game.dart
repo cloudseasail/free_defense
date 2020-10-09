@@ -53,6 +53,10 @@ abstract class FlameGame extends Game
     }
   }
 
+  void remove(Component c) {
+    components.remove(c);
+  }
+
   /// Adds a new component to the components list.
   ///
   /// Also calls [preAdd], witch in turn sets the current size on the component (because the resize hook won't be called until a new resize happens).

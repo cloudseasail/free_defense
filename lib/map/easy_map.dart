@@ -4,7 +4,6 @@ import 'package:flame/position.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/astar/astarnode.dart';
-import 'package:freedefense/base/flame_game.dart';
 import 'package:freedefense/base/game_component.dart';
 
 import 'astarmap_mixin.dart';
@@ -30,12 +29,12 @@ class EasyMap extends GameComponent with AstarMapMixin {
     }
     registerGestureEvent(GestureType.TapDown);
     registerGestureEvent(GestureType.LongPress);
-    astarMapInit(mapScale);
   }
 
-  void registerToGame(FlameGame gameRef, {bool later = false}) {
-    super.registerToGame(gameRef, later: later);
+  @override
+  void initialize() {
     initBackground();
+    astarMapInit(mapScale);
   }
 
   void initBackground() {
