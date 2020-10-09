@@ -34,11 +34,17 @@ class EnemyComponent extends GameComponent with MovingComponent {
     moveUpdate(t);
     if (life < 0) {
       this.remove();
+      gameRef.controller.onEnemyKilled();
     }
   }
 
   void receiveDamage(double damage) {
     life -= damage;
+  }
+
+  void reachTarget() {
+    gameRef.controller.onEnemyMissed();
+    this.remove();
   }
 
   // void moveTo(Position to, [Function onFinish]) => pathMoveTo(to);

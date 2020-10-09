@@ -36,8 +36,4 @@ class GameTest extends GameMain {
     super.onTapDown(details);
     // test4();
   }
-
-  void onLongPressStart(LongPressStartDetails details) {
-    test3(details.globalPosition);
-  }
 }

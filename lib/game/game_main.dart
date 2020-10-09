@@ -5,6 +5,7 @@ import 'package:freedefense/base/flame_game.dart';
 import 'package:freedefense/game/game_controller.dart';
 import 'package:freedefense/game/game_setting.dart';
 import 'package:freedefense/game/game_view.dart';
+import 'package:freedefense/game/status_bar.dart';
 import 'package:freedefense/map/easy_map.dart';
 
 import 'enemy_spawner.dart';
@@ -17,6 +18,7 @@ class GameMain extends FlameGame {
   GameSetting setting = GameSetting();
   GameController controller = GameController();
   EnemySpawner enemySpawner = EnemySpawner();
+  StatusBar statusBar;
 
   bool recordFps() => true;
 
@@ -35,9 +37,13 @@ class GameMain extends FlameGame {
         tileSize: setting.tileSize,
         mapScale: setting.mapScale,
         mapSize: setting.mapSize);
+    statusBar = StatusBar(
+        initPosition: setting.statusBarPosition, size: setting.statusBarSize);
+
     easyMap.registerToGame(this);
     controller.registerToGame(this);
     enemySpawner.registerToGame(this);
+    statusBar.registerToGame(this);
   }
 
   void resize(Size size) {
@@ -59,6 +65,25 @@ class GameMain extends FlameGame {
   }
 
   void onTapDown(TapDownDetails details) {
+    // recordTime();
     super.onTapDown(details);
+  }
+
+  int currentTimeMillis() {
+    return new DateTime.now().millisecondsSinceEpoch;
+  }
+
+  int timeRecord = 0;
+  void recordTime() {
+    timeRecord = currentTimeMillis();
+    print('timeRecord is $timeRecord');
+  }
+
+  void timeDelay() {
+    if (timeRecord > 0) {
+      int d = currentTimeMillis() - timeRecord;
+      print('timeDelay $d');
+      timeRecord = 0;
+    }
   }
 }

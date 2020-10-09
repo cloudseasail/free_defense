@@ -34,12 +34,24 @@ class GameController extends GameComponent {
     cannon.preview = false;
   }
 
+  void deactiveCannon(Cannon cannon) {
+    cannon.preview = true;
+  }
+
   void destroyCannon(Cannon cannon) {
     cannon.remove();
   }
 
   void mapComponentUpdate() {
     _mapComponentUpdate = true;
+  }
+
+  void onEnemyKilled() {
+    gameRef.statusBar.killedEnemey++;
+  }
+
+  void onEnemyMissed() {
+    gameRef.statusBar.missedEnemey++;
   }
 
   @override
@@ -52,11 +64,18 @@ class GameController extends GameComponent {
       (element as ObjectSensor).scan(visableComponents);
     });
 
+    /*Opt, when map component updated, reschdule the enimies move path */
     if (_mapComponentUpdate) {
       enemies.forEach((element) => (element as EnemyComponent)
           .moveToWithPath(gameRef.setting.enemyTarget));
       _mapComponentUpdate = false;
     }
+
+    /*check enmeiy enter target. TODO: to optimize this with enemy sensor*/
+    enemies
+        .where((element) =>
+            element.area.contains(gameRef.setting.enemyTarget.toOffset()))
+        .forEach((element) => (element as EnemyComponent).reachTarget());
   }
 
   void updateComponentList() {

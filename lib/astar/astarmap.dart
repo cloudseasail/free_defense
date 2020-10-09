@@ -31,6 +31,10 @@ class AstarMap {
     obstacleMap[x][y] = false;
   }
 
+  void removeObstacle(int x, int y) {
+    obstacleMap[x][y] = true;
+  }
+
   AstarNode astar(AstarNode start, AstarNode goal) {
     List<AstarNode> closed = [];
     List<AstarNode> open = [start];

@@ -11,11 +11,12 @@ void main() async {
 
   // BoxGame game = BoxGame();
   // GameView game = GameView();
-  GameTest game = GameTest();
 
   Util flameUtil = Util();
   await flameUtil.fullScreen();
   await flameUtil.setOrientation(DeviceOrientation.portraitUp);
+
+  GameTest game = GameTest();
 
   Flame.images.loadAll(<String>[
     'cannon/Tower.png',
@@ -23,6 +24,8 @@ void main() async {
     'cannon/Bullet_Cannon.png',
     'enemy/enemyA.png',
     'cannon/boom3.png',
+    'blackhole.png',
+    'whitehole.png',
   ]);
   runApp(game.widget);
 }

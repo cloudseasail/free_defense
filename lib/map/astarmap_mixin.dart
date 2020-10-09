@@ -17,6 +17,11 @@ mixin AstarMapMixin {
     astarMap.addObstacle(node.x, node.y);
   }
 
+  void astarMapRemoveObstacle(Position position) {
+    AstarNode node = _positionToNode(position);
+    astarMap.removeObstacle(node.x, node.y);
+  }
+
   AstarNode astarMapResolve(Position start, Position end) {
     AstarNode _start = _positionToNode(start);
     AstarNode _end = _positionToNode(end);

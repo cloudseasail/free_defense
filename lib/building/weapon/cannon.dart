@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/position.dart';
-import 'package:flame/time.dart';
 import 'package:flutter/gestures.dart';
 import 'package:freedefense/base/flame_game.dart';
 import 'package:freedefense/base/object_sensor.dart';
@@ -15,7 +14,6 @@ class Cannon extends CannonView {
   ObjectSensor sensor;
   double range;
   double fireInterval;
-  Timer sensorTimer;
 
   Cannon({
     Position initPosition,
@@ -24,8 +22,8 @@ class Cannon extends CannonView {
     this.fireInterval,
     double life = 100,
   }) : super(initPosition: initPosition, size: size, life: life) {
-    preview = true;
     addSensor();
+    preview = true;
   }
 
   set preview(bool p) => setPreview(p);
@@ -37,28 +35,24 @@ class Cannon extends CannonView {
     // (p == true)
     //     ? registerGestureEvent(GestureType.TapDown)
     //     : deregisterGestureEvent(GestureType.TapDown);
-    if (p == false) {
-      sensor.active = true;
-    }
+
+    sensor.active = p ? false : true;
   }
 
   @override
   void update(double t) {
     super.update(t);
-    sensorTimer.update(t);
   }
 
   void addSensor() {
     void onSenseEnemy(EnemyComponent enemy) {
       fire(enemy.position);
-      sensor.active = false;
-      sensorTimer.start();
+      sensor.coolDown(fireInterval);
     }
 
     /* add range later because cannot access gameRef here */
     sensor = ObjectSensor<EnemyComponent>(
         initPosition = position, size = size, range = range, onSenseEnemy);
-    sensorTimer = Timer(fireInterval, callback: () => sensor.active = true);
   }
 
   void remove() {

@@ -13,15 +13,15 @@ import 'package:ordered_set/ordered_set.dart';
 import 'game_component.dart';
 
 abstract class FlameGame extends Game
-    with TapDetector, DoubleTapDetector, PanDetector, LongPressDetector {
+    with TapDetector, PanDetector, LongPressDetector {
   bool _isPause = false;
 
   /// The list of components to be updated and rendered by the base game.
-  OrderedSet<GameComponent> components =
+  OrderedSet<Component> components =
       OrderedSet(Comparing.on((c) => c.priority()));
 
   /// Components added by the [addLater] method
-  final List<GameComponent> _addLater = [];
+  final List<Component> _addLater = [];
 
   /// Current screen size, updated every resize via the [resize] method hook
   Size size;

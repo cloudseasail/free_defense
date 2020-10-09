@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/position.dart';
+import 'package:flame/time.dart';
 import 'package:freedefense/base/game_component.dart';
 
 import 'game_component.dart';
@@ -9,6 +10,7 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
   bool _active = false;
   Function onSensed;
   double range;
+  Timer cdTimer;
   // double range;
   ObjectSensor(Position initPosition, Size size, this.range, this.onSensed)
       : super(initPosition: initPosition, size: size) {
@@ -17,7 +19,14 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
 
   int priority() => 200;
 
-  set active(bool a) => (_active = a);
+  set active(bool a) {
+    _active = a;
+    if (cdTimer != null) {
+      cdTimer.stop();
+      cdTimer = null;
+    }
+  }
+
   get active => _active;
 
   void scan(Iterable<GameComponent> objects) {
@@ -40,6 +49,16 @@ class ObjectSensor<T extends GameComponent> extends GameComponent {
     return this.position.distance(o.position) <= (range + collisionDistance);
   }
 
-  // void update(double t) {}
+  void coolDown(double time) {
+    active = false;
+    cdTimer = Timer(time, callback: () => active = true);
+    cdTimer.start();
+  }
+
+  void update(double t) {
+    if (cdTimer != null) {
+      cdTimer.update(t);
+    }
+  }
   // void render(Canvas c) {}
 }
