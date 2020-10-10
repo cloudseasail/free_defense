@@ -16,7 +16,11 @@ class TimerComponent extends GameComponent {
     return this;
   }
 
-  void stop() => _timer.stop();
+  void stop({bool remove = true}) {
+    _timer.stop();
+    if (remove) this.remove();
+  }
+
   void update(double t) {
     super.update(t);
     _timer.update(t);

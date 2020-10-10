@@ -8,6 +8,7 @@ import 'package:flame/text_config.dart';
 import 'package:freedefense/base/game_component.dart';
 
 class StatusBar extends GameComponent {
+  TextComponent fpsStatus;
   TextComponent waveStatus;
   TextComponent killedStatus;
   TextComponent missedStatus;
@@ -38,6 +39,13 @@ class StatusBar extends GameComponent {
           ..anchor = Anchor.center
           ..x = position.x + position.x / 2
           ..y = position.y;
+
+    fpsStatus = TextComponent('fps', config: textConfig.withFontSize(8))
+      ..anchor = Anchor.bottomLeft
+      ..x = 0
+      ..y = gameRef.setting.screenSize.height;
+
+    gameRef.add(fpsStatus);
     gameRef.add(waveStatus);
     gameRef.add(killedStatus);
     gameRef.add(missedStatus);
@@ -51,6 +59,10 @@ class StatusBar extends GameComponent {
 
     killedStatus.text = 'killed: $killedEnemey';
     missedStatus.text = 'missed: $missedEnemey';
+    if (gameRef.recordFps()) {
+      var _fps = gameRef.fps().toStringAsFixed(3);
+      fpsStatus.text = 'fps $_fps';
+    }
   }
 
   void setWaveStatus(int wave) {

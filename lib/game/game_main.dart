@@ -59,13 +59,14 @@ class GameMain extends FlameGame {
   @override
   void update(double t) {
     super.update(t);
-    if (recordFps()) {
-      double _fps = fps();
-      print('GameMain FPS $_fps');
-    }
+    // if (recordFps()) {
+    //   double _fps = fps();
+    //   int len = components.length;
+    //   print('GameMain FPS $_fps, components $len');
+    // }
     // Iterable<GameComponent> test = components
     //     .where((o) => o is! MapTileComponent)
-    //     .where((o) => o is! EasyMap);
+    //     .where((o) => o is!  0x7d2b523304a0) (first time)
     // print(test.length);
   }
 

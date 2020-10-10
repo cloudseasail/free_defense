@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+log/
 
 # IntelliJ related
 *.iml
@@ -42,6 +43,7 @@ ios/
 
 # Web related
 **/web/**
+generated_plugin_registrant.dart
 
 # iOS/XCode related
 **/ios/**/*.mode1v3

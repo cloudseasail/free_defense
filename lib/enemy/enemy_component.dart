@@ -76,13 +76,21 @@ class EnemyComponent extends GameComponent with MovingComponent {
   }
 
   Position pathRadomPosition(AstarNode node) {
-    Position lefttop = gameRef.easyMap.nodeToPosition(node);
-    Offset randomArea = Offset(gameRef.easyMap.tileSize.width - this.size.width,
-        gameRef.easyMap.tileSize.height - this.size.height);
-    lefttop = lefttop + Position(this.size.width / 2, this.size.height / 2);
-    double rndx = Random().nextDouble();
-    double rndy = Random().nextDouble();
-    return lefttop +
-        Position.fromOffset(Offset(randomArea.dx * rndx, randomArea.dy * rndy));
+    if (node.next == null) {
+      /*target goto center*/
+      Position lefttop = gameRef.easyMap.nodeToPosition(node);
+      return lefttop + Position.fromSize(gameRef.easyMap.tileSize / 2);
+    } else {
+      Position lefttop = gameRef.easyMap.nodeToPosition(node);
+      Offset randomArea = Offset(
+          gameRef.easyMap.tileSize.width - this.size.width,
+          gameRef.easyMap.tileSize.height - this.size.height);
+      lefttop = lefttop + Position(this.size.width / 2, this.size.height / 2);
+      double rndx = Random().nextDouble();
+      double rndy = Random().nextDouble();
+      return lefttop +
+          Position.fromOffset(
+              Offset(randomArea.dx * rndx, randomArea.dy * rndy));
+    }
   }
 }
