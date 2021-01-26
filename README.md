@@ -7,7 +7,7 @@ FreeDefense Game with Flutter and Flame.
 <img src="assets/screenshot.png" width="275px"/>
 
 ## DEMO: [Web version] 
-[Web version] http://freedefense.fluttergame.ml
+[Web version] http://freedefense.vquant.ml/
 
 Controls:
 - Click:  preview the cannon.  (donot block all the ways!)
