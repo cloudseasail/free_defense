@@ -1,18 +1,19 @@
 [![Powered by Flame](https://img.shields.io/badge/Powered%20by-%F0%9F%94%A5-orange.svg)](https://flame-engine.org)
 
-# FreeDefense
+# FreeDefense V1
 
 FreeDefense Game with Flutter and Flame.
 
 <img src="assets/screenshot.png" width="275px"/>
 
-## DEMO: [Web version] 
+## DEMO: [Web version for V0]  
 [Web version] http://freedefense.vquant.ml/
 
 Controls:
-- Click:  preview the cannon.  (donot block all the ways!)
-- Click agin:  Build cannon.   
-- Double clcik:  Remove cannon.  (you will still see the preview)
+- Click:  preview the weapon.  (donot block the enemies!)
+- Click again: build weapon.
+- Clink on weapon,  update and destroy the weapon
+- Collect mine to build weapon
 
 ## TODO
 * [ ] Game 
@@ -20,15 +21,12 @@ Controls:
     - [ ] Game guide
     - [ ] Collect coin and use coin to create cannon
     - [ ] Game Failure/Re-start
-* [ ] Cannons
-    - [ ] Add more Cannon types
-    - [ ] Upgrade Cannons with more featurs. (faster bullet/better aiming/more damage)
-    - [ ] Add missles 
+* [ ] Weapons
+    - [ ] Add more Weapon types
+    - [ ] Upgrade Weapon with more featurs. (faster bullet/better aiming/more damage)
 * [ ] Enemies
     - [ ] Add life indicator
 * [ ] Next version [TBD]
-    - [ ] Add mine and miner to collect coin
-    - [ ] Different coin for differnt cannon
     - [ ] More topography 
     - [ ] Medal system
  

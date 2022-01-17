@@ -139,7 +139,7 @@ class WeaponSettingV1 {
     WeaponSetting w = WeaponSetting()
       ..cost = 10
       ..range = 1.5 * tileSize
-      ..damage = 30
+      ..damage = 15
       ..fireInterval = 0.8
       ..rotateSpeed = pi * 2
       ..bulletSpeed = tileSize * 2
@@ -164,7 +164,7 @@ class WeaponSettingV1 {
     w = WeaponSetting()
       ..cost = 15
       ..range = 2 * tileSize
-      ..damage = 10
+      ..damage = 5
       ..fireInterval = 0.2
       ..rotateSpeed = pi * 4
       ..bulletSpeed = tileSize * 5
@@ -189,7 +189,7 @@ class WeaponSettingV1 {
     w = WeaponSetting()
       ..cost = 30
       ..range = 3 * tileSize
-      ..damage = 100
+      ..damage = 30
       ..fireInterval = 1.5
       ..rotateSpeed = pi * 1
       ..bulletSpeed = tileSize * 0.7
