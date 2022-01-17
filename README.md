@@ -4,7 +4,7 @@
 
 FreeDefense Game with Flutter and Flame.
 
-<img src="assets/screenshot.png" width="275px"/>
+<img src="assets/screenshot.jpg" width="275px"/>
 
 ## DEMO: [Web version for V0]  
 [Web version] http://freedefense.vquant.ml/
