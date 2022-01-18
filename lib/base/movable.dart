@@ -11,20 +11,6 @@ mixin Movable on GameComponent {
   double _totalLength = 0;
   double _movedLength = 0;
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (active) {
-      moveUpdate(dt);
-    }
-  }
-
-  @override
-  void onRemove() {
-    onMoveFinish = null;
-    super.onRemove();
-  }
-
   void moveTo(Vector2 to, [Function? onFinish]) {
     moveFromTo(position, to, onFinish);
   }
@@ -42,7 +28,7 @@ mixin Movable on GameComponent {
     angle = angleNearTo(to);
   }
 
-  void moveUpdate(double t) {
+  void updateMovable(double t) {
     // super.update(t);
     if (!_finish) {
       /*finish on the next tick,  to make sure the Vector2 is able to be sensored*/

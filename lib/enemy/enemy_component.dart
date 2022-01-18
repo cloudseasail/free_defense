@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:freedefense/astar/astarnode.dart';
 import 'package:freedefense/base/game_component.dart';
+import 'package:freedefense/base/life_indicator.dart';
 import 'package:freedefense/base/movable.dart';
 import 'package:freedefense/base/scanable.dart';
 import 'dart:math';
@@ -10,7 +13,8 @@ import 'package:freedefense/game/game_controller.dart';
 enum EnemyType { ENEMYA, ENEMYB, ENEMYC, ENEMYD }
 
 class EnemyComponent extends GameComponent
-    with Scanable, Movable, EnemySmartMove {
+    with Scanable, Movable, EnemySmartMove, LifeIndicator {
+  double maxLife = 0;
   double life = 0;
   bool dead = false;
   late EnemyType enemyType;
@@ -28,6 +32,16 @@ class EnemyComponent extends GameComponent
       dead = true;
       active = false;
     }
+
+    if (active) {
+      updateMovable(t);
+    }
+  }
+
+  @override
+  void render(Canvas c) {
+    super.render(c);
+    renderLifIndicator(c);
   }
 
   @override

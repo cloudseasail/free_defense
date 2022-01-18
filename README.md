@@ -25,7 +25,7 @@ Controls:
     - [ ] Add more Weapon types
     - [ ] Upgrade Weapon with more featurs. (faster bullet/better aiming/more damage)
 * [ ] Enemies
-    - [ ] Add life indicator
+    - [v] Add life indicator
 * [ ] Next version [TBD]
     - [ ] More topography 
     - [ ] Medal system

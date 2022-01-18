@@ -20,7 +20,7 @@ class GameSetting {
   WeaponSettingV1 weapons = WeaponSettingV1();
   NeutualSetting neutual = NeutualSetting();
 
-  Vector2 mapGrid = Vector2(12, 12);
+  Vector2 mapGrid = Vector2(10, 10);
   late Vector2 mapPosition;
   late Vector2 mapSize;
   late Vector2 viewPosition;
@@ -74,10 +74,10 @@ class GameSetting {
     barPosition = Vector2(size.x / 2, grid / 2);
     barSize = Vector2(size.x, grid);
     viewPosition = Vector2(size.x / 2, size.y - (grid / 2));
-    viewSize = Vector2(size.x, grid);
+    viewSize = Vector2(size.x, grid * 1.5);
     /*Map in the middle*/
     mapPosition = Vector2(size.x / 2, size.y / 2);
-    mapSize = Vector2(size.x - 2, size.y - (grid * 2) - 2);
+    mapSize = Vector2(size.x - 2, size.y - barSize.y - viewSize.y - 2);
     mapGrid = mapSize / grid;
     mapGrid =
         Vector2(mapGrid.x.toInt().toDouble(), mapGrid.y.toInt().toDouble());

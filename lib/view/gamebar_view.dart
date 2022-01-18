@@ -27,7 +27,7 @@ class GamebarView extends GameComponent {
   Future<void>? onLoad() {
     waveStatus = TextComponent(
       textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 25)),
+          style: const TextStyle(color: Colors.white70, fontSize: 22)),
       position: (size / 2),
       anchor: Anchor.center,
     );
@@ -35,7 +35,7 @@ class GamebarView extends GameComponent {
 
     missedStatus = TextComponent(
       textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 18)),
+          style: const TextStyle(color: Colors.white70, fontSize: 12)),
       position: (size / 2)..x = (size.x * (1 / 8)),
       anchor: Anchor.center,
     );
@@ -43,16 +43,16 @@ class GamebarView extends GameComponent {
 
     killedStatus = TextComponent(
       textRenderer: TextPaint(
-          style: const TextStyle(color: Colors.white70, fontSize: 18)),
-      position: (size / 2)..x = (size.x * (2 / 8)),
+          style: const TextStyle(color: Colors.white70, fontSize: 12)),
+      position: (size / 2)..x = (size.x * (3 / 8)),
       anchor: Anchor.center,
     );
     add(killedStatus);
 
     mine = MineView(
         position: (size / 2)..x = (size.x * (6 / 8)),
-        size: Vector2(size.y * 1.5, size.y) * 0.8,
-        style: const TextStyle(color: Colors.white70, fontSize: 18));
+        size: Vector2(size.y * 1.5, size.y) * 0.7,
+        style: const TextStyle(color: Colors.white70, fontSize: 12));
     add(mine);
 
     return super.onLoad();

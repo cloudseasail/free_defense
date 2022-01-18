@@ -14,6 +14,7 @@ class EnemyV1 extends EnemyComponent {
     enemyType = type;
     EnemySetting s = setting.enemies.enemy[enemyType.index];
     life = s.life;
+    maxLife = life;
     speed = s.speed;
     size = setting.enemySize * s.scale;
     spriteSheet = s.spriteSheet;

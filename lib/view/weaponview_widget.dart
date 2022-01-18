@@ -30,7 +30,8 @@ class WeaponViewWidget {
       child: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("images/diaglog.png"), fit: BoxFit.fill)),
+                  image: AssetImage("assets/images/diaglog.png"),
+                  fit: BoxFit.fill)),
           width: size.x,
           height: size.y,
           child: Stack(alignment: Alignment.center, children: [

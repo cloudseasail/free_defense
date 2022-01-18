@@ -44,16 +44,9 @@ class GameInstruction {
           controller.add(component);
           controller.buildingWeapon?.removeFromParent();
           controller.buildingWeapon = component;
-          if (component.collision(controller.gateStart)) {
-            component.blockMap = true;
-          }
-          if (component.collision(controller.gateEnd)) {
-            component.blockMap = true;
-          }
-          if (component.blockMap == false) {
-            component.blockMap =
-                controller.gameRef.mapController.testBlock(component.position);
-          }
+          component.blockMap = component.collision(controller.gateStart) ||
+              component.collision(controller.gateEnd) ||
+              controller.gameRef.mapController.testBlock(component.position);
         }
         break;
       case GameControl.WEAPON_SELECTED:

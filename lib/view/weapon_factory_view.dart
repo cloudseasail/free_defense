@@ -27,7 +27,7 @@ class WeaponFactoryView extends GameComponent {
                 gameSetting.viewSize.x * (1 / 3), gameSetting.viewPosition.y),
             size: Vector2(
                 gameSetting.viewSize.x * (2 / 3) - gameSetting.mapTileSize.x,
-                gameSetting.viewSize.y));
+                gameSetting.viewSize.y * (2 / 3)));
 
   List<SingleWeaponView> weapons = [];
 

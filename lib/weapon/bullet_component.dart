@@ -25,6 +25,14 @@ class BulletComponent extends GameComponent
     return super.onLoad();
   }
 
+  @override
+  void update(double dt) {
+    if (active) {
+      updateMovable(dt);
+    }
+    super.update(dt);
+  }
+
   void onHitEnemy(GameComponent enemy) {
     radarOn = false;
     (enemy as EnemyComponent).receiveDamage(damage);
