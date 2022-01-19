@@ -13,8 +13,7 @@ class EnemyV1 extends EnemyComponent {
       : super(position: position, size: Vector2.zero()) {
     enemyType = type;
     EnemySetting s = setting.enemies.enemy[enemyType.index];
-    life = s.life;
-    maxLife = life;
+    maxLife = s.life;
     speed = s.speed;
     size = setting.enemySize * s.scale;
     spriteSheet = s.spriteSheet;

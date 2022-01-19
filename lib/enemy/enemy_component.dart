@@ -14,7 +14,7 @@ enum EnemyType { ENEMYA, ENEMYB, ENEMYC, ENEMYD }
 
 class EnemyComponent extends GameComponent
     with Scanable, Movable, EnemySmartMove, LifeIndicator {
-  double maxLife = 0;
+  double _maxLife = 0;
   double life = 0;
   bool dead = false;
   late EnemyType enemyType;
@@ -22,6 +22,12 @@ class EnemyComponent extends GameComponent
     required Vector2 position,
     required Vector2 size,
   }) : super(position: position, size: size, priority: 30);
+
+  get maxLife => _maxLife;
+  set maxLife(double m) {
+    _maxLife = m;
+    life = m;
+  }
 
   @override
   void update(double t) {

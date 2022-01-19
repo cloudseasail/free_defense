@@ -92,6 +92,6 @@ class EnemyFactory extends GameComponent {
 
   void enpowerEnemy(EnemyComponent enemy) {
     num exp = (currentWave - 1);
-    enemy.life *= math.pow(1.1, exp);
+    enemy.maxLife *= math.pow(1.1, exp);
   }
 }
