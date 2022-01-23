@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flame/assets.dart';
@@ -16,6 +17,7 @@ class GameSetting {
   factory GameSetting() {
     return _instance;
   }
+
   EnemySettingV1 enemies = EnemySettingV1();
   WeaponSettingV1 weapons = WeaponSettingV1();
   NeutualSetting neutual = NeutualSetting();
@@ -102,6 +104,7 @@ class NeutualSetting {
 }
 
 class WeaponSetting {
+  String label = "";
   int cost = 0;
   late Vector2 size;
   late Vector2 bulletSize;
@@ -116,6 +119,26 @@ class WeaponSetting {
   late final SpriteSheet explosion;
   late final Vector2 explosionSize;
   late final List<Sprite> explosionSprites;
+
+  WeaponSetting.empty() {}
+
+  fill(weaponParam, tileSize, weaponTower, images) async {
+    label = weaponParam['label'];
+    cost = weaponParam['cost'];
+    range = weaponParam['range'] * tileSize;
+    damage = weaponParam['damage'];
+    fireInterval = weaponParam['fireInterval'];
+    rotateSpeed = pi * weaponParam['rotateSpeed'];
+    bulletSpeed = tileSize * weaponParam['bulletSpeed'];
+    size = gameSetting.scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
+    bulletSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
+    explosionSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
+    tower = weaponTower;
+    barrel[0] = Sprite(await images.load('weapon/${weaponParam['barrelImg0']}.png'));
+    barrel[1] = Sprite(await images.load('weapon/${weaponParam['barrelImg1']}.png'));
+    barrel[2] = Sprite(await images.load('weapon/${weaponParam['barrelImg2']}.png'));
+    bullet = Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
+  }
 
   void createExpolosionAnimation(List<Vector2> frameLocation, double stepTime) {
     List<Sprite> sprites = [];
@@ -136,76 +159,100 @@ class WeaponSettingV1 {
     double tileSize = gameSetting.mapTileSize.length;
     List<Vector2> expFrame = [];
 
-    WeaponSetting w = WeaponSetting()
-      ..cost = 10
-      ..range = 1.5 * tileSize
-      ..damage = 15
-      ..fireInterval = 0.8
-      ..rotateSpeed = pi * 2
-      ..bulletSpeed = tileSize * 2
-      ..size = gameSetting.scaleOnMapTile(Vector2(0.8, 0.8))
-      ..bulletSize = gameSetting.scaleOnMapTile(Vector2(0.1, 0.2))
-      ..explosionSize = gameSetting.scaleOnMapTile(Vector2(0.8, 0.8))
-      ..tower = weaponTower
-      ..barrel[0] = Sprite(await images.load('weapon/Cannon.png'))
-      ..barrel[1] = Sprite(await images.load('weapon/Cannon2.png'))
-      ..barrel[2] = Sprite(await images.load('weapon/Cannon3.png'))
-      ..bullet = Sprite(await images.load('weapon/Bullet1.png'))
+    String weaponParamsString = '[{'
+        '"label" : "CANNON",'
+        '"cost" : 10,'
+        '"range" : 1.5,'
+        '"damage" : 15.0,'
+        '"fireInterval" : 0.8,'
+        '"rotateSpeed" : 2,'
+        '"bulletSpeed" : 2,'
+        '"sizeX" : 0.8,'
+        '"sizeY" : 0.8,'
+        '"bulletSizeX" : 0.1,'
+        '"bulletSizeY" : 0.2,'
+        '"explosionSizeX" : 0.8,'
+        '"explosionSizeY" : 0.8,'
+        '"barrelImg0" : "Cannon",'
+        '"barrelImg1" : "Cannon2",'
+        '"barrelImg2" : "Cannon3",'
+        '"bulletImg" : "Bullet1"'
+        '},'
+        '{'
+        '"label" : "MG",'
+        '"cost" : 15,'
+        '"range" : 2,'
+        '"damage" : 5.0,'
+        '"fireInterval" : 0.2,'
+        '"rotateSpeed" : 4,'
+        '"bulletSpeed" : 5,'
+        '"sizeX" : 0.8,'
+        '"sizeY" : 0.8,'
+        '"bulletSizeX" : 0.1,'
+        '"bulletSizeY" : 0.3,'
+        '"explosionSizeX" : 0.5,'
+        '"explosionSizeY" : 0.5,'
+        '"barrelImg0" : "MG",'
+        '"barrelImg1" : "MG2",'
+        '"barrelImg2" : "MG3",'
+        '"bulletImg" : "Bullet2"'
+        '},'
+        '{'
+        '"label" : "MISSILE",'
+        '"cost" : 30,'
+        '"range" : 3,'
+        '"damage" : 30.0,'
+        '"fireInterval" : 1.5,'
+        '"rotateSpeed" : 1,'
+        '"bulletSpeed" : 0.7,'
+        '"sizeX" : 0.9,'
+        '"sizeY" : 0.9,'
+        '"bulletSizeX" : 0.3,'
+        '"bulletSizeY" : 0.4,'
+        '"explosionSizeX" : 0.7,'
+        '"explosionSizeY" : 0.7,'
+        '"barrelImg0" : "Missile_Launcher",'
+        '"barrelImg1" : "Missile_Launcher2",'
+        '"barrelImg2" : "Missile_Launcher3",'
+        '"bulletImg" : "Missile"'
+        '}'
+        ']';
+    final weaponParams = json.decode(weaponParamsString);
+
+    WeaponSetting w = WeaponSetting.empty()
       ..explosion = SpriteSheet.fromColumnsAndRows(
         image: await images.load('weapon/explosion1.png'),
         columns: 8,
         rows: 8,
       );
+    w.fill(weaponParams[0], tileSize, weaponTower, images);
+
     expFrame = [];
     expFrame = List<Vector2>.generate(8, (i) => Vector2(i % 8, 4));
     w.createExpolosionAnimation(expFrame, 1.5);
     weapon.add(w);
 
-    w = WeaponSetting()
-      ..cost = 15
-      ..range = 2 * tileSize
-      ..damage = 5
-      ..fireInterval = 0.2
-      ..rotateSpeed = pi * 4
-      ..bulletSpeed = tileSize * 5
-      ..size = gameSetting.scaleOnMapTile(Vector2(0.8, 0.8))
-      ..bulletSize = gameSetting.scaleOnMapTile(Vector2(0.1, 0.3))
-      ..explosionSize = gameSetting.scaleOnMapTile(Vector2(0.5, 0.5))
-      ..tower = weaponTower
-      ..barrel[0] = Sprite(await images.load('weapon/MG.png'))
-      ..barrel[1] = Sprite(await images.load('weapon/MG2.png'))
-      ..barrel[2] = Sprite(await images.load('weapon/MG3.png'))
-      ..bullet = Sprite(await images.load('weapon/Bullet2.png'))
+    w = WeaponSetting.empty()
       ..explosion = SpriteSheet.fromColumnsAndRows(
         image: await images.load('weapon/explosion2.png'),
         columns: 6,
         rows: 1,
       );
+    w.fill(weaponParams[1], tileSize, weaponTower, images);
+
     expFrame = [];
     expFrame = List<Vector2>.generate(6, (i) => Vector2(0, i % 6));
     w.createExpolosionAnimation(expFrame, 0.05);
     weapon.add(w);
 
-    w = WeaponSetting()
-      ..cost = 30
-      ..range = 3 * tileSize
-      ..damage = 30
-      ..fireInterval = 1.5
-      ..rotateSpeed = pi * 1
-      ..bulletSpeed = tileSize * 0.7
-      ..size = gameSetting.scaleOnMapTile(Vector2(0.9, 0.9))
-      ..bulletSize = gameSetting.scaleOnMapTile(Vector2(0.3, 0.4))
-      ..explosionSize = gameSetting.scaleOnMapTile(Vector2(0.7, 0.7))
-      ..tower = weaponTower
-      ..barrel[0] = Sprite(await images.load('weapon/Missile_Launcher.png'))
-      ..barrel[1] = Sprite(await images.load('weapon/Missile_Launcher2.png'))
-      ..barrel[2] = Sprite(await images.load('weapon/Missile_Launcher3.png'))
-      ..bullet = Sprite(await images.load('weapon/Missile.png'))
+    w = WeaponSetting.empty()
       ..explosion = SpriteSheet.fromColumnsAndRows(
         image: await images.load('weapon/explosion3.png'),
         columns: 5,
         rows: 3,
       );
+    w.fill(weaponParams[2], tileSize, weaponTower, images);
+
     expFrame = [];
     expFrame = List<Vector2>.generate(6, (i) => Vector2(i / 2, (i % 2) * 3));
     w.createExpolosionAnimation(expFrame, 0.1);
