@@ -87,7 +87,7 @@ class GameMain extends FlameGame with HasTappables {
     if (loadDone) {
       gameController.send(GameComponent(), GameControl.ENEMY_SPAWN);
       gamebarView.killedEnemy = 0;
-      gamebarView.mine.number = 999;
+      gamebarView.mineCollected = 999;
       gamebarView.missedEnemy = 0;
     }
   }
