@@ -16,7 +16,6 @@ class EnemyComponent extends GameComponent
     with Scanable, Movable, EnemySmartMove, LifeIndicator {
   double _maxLife = 0;
   double life = 0;
-  int mineValue = 5;
   bool dead = false;
   late EnemyType enemyType;
   EnemyComponent({
@@ -72,7 +71,6 @@ class EnemyComponent extends GameComponent
   void onKilled() {
     active = false;
     gameRef.gameController.send(this, GameControl.ENEMY_KILLED);
-    gameRef.gamebarView.mineCollected += mineValue;
     this.removeFromParent();
   }
 }

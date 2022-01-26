@@ -64,7 +64,7 @@ class WeaponFactoryView extends GameComponent {
 
   int onBuildDone(WeaponComponent c) {
     weapons[c.weaponType.index].count++;
-    gameRef.gamebarView.mineCollected -= weapons[c.weaponType.index].cost;
+    gameRef.gamebarView.mine.number -= weapons[c.weaponType.index].cost;
 
     return weapons[c.weaponType.index].count;
   }
