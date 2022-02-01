@@ -68,7 +68,7 @@ class GameSetting {
   }
 
   void optimizeMapGrid(Vector2 size) {
-    print('optimizeMapGrid size $size');
+    mapGrid = Vector2(10, 10);
     double grid = math.min(mapGrid.x, mapGrid.y);
     Vector2 optSize = size / grid;
     grid = math.min(optSize.x, optSize.y);
