@@ -31,28 +31,38 @@ class EnemyFactory extends GameComponent {
   int currentWave = 0;
   int _spwanCount = 0;
   double _interval = 1;
+  bool gameOver = false;
 
-  void start() => nextWave();
+  void start() {
+    gameOver = false;
+    nextWave();
+  }
+
+  void stop() {
+    gameOver = true;
+  }
 
   void nextWave() {
     currentWave++;
-    gameRef.gameController.send(this, GameControl.ENEMY_NEXT_WAVE);
-    switch (currentWave) {
-      case 1:
-        spawnEnemy(20, 1.2, spawnEnemyA);
-        break;
-      case 2:
-        spawnEnemy(30, 0.8, spawnEnemyB);
-        break;
-      case 3:
-        spawnEnemy(15, 2, spawnEnemyC);
-        break;
-      case 4:
-        spawnEnemy(10, 1.5, spawnEnemyD);
-        break;
-      default:
-        spawnEnemy(10, 2, spawnEnemyMix);
-        break;
+    if (!gameOver) {
+      gameRef.gameController.send(this, GameControl.ENEMY_NEXT_WAVE);
+      switch (currentWave) {
+        case 1:
+          spawnEnemy(20, 1.2, spawnEnemyA);
+          break;
+        case 2:
+          spawnEnemy(30, 0.8, spawnEnemyB);
+          break;
+        case 3:
+          spawnEnemy(15, 2, spawnEnemyC);
+          break;
+        case 4:
+          spawnEnemy(10, 1.5, spawnEnemyD);
+          break;
+        default:
+          spawnEnemy(10, 2, spawnEnemyMix);
+          break;
+      }
     }
   }
 

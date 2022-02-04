@@ -43,7 +43,7 @@ class WeaponFactoryView extends GameComponent {
 
   SingleWeaponView _loadSingleView(int slot, WeaponType type) {
     SingleWeaponView view = SingleWeaponView(
-        position: Vector2(size.x * (slot / 4 + 1 / 8), size.y / 2),
+        position: Vector2(size.x * (slot / 3 + 1 / 4), size.y / 3),
         size: Vector2(size.x / 4, size.y),
         weaponType: type);
     add(view);

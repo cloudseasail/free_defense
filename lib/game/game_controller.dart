@@ -27,6 +27,7 @@ enum GameControl {
   ENEMY_MISSED,
   ENEMY_KILLED,
   ENEMY_NEXT_WAVE,
+  GAME_OVER
 }
 
 class GameInstruction {
@@ -85,6 +86,10 @@ class GameInstruction {
         break;
       case GameControl.WEAPON_SHOW_ACTION:
         WeaponViewWidget.show(source as WeaponComponent);
+        break;
+      case GameControl.GAME_OVER:
+        controller.gameRef.overlays.add('gameover');
+        controller.gameRef.stop();
         break;
       default:
     }
