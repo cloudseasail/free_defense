@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/base/radar.dart';
-import 'package:freedefense/base/scanable.dart';
-import 'package:freedefense/enemy/enemy_component.dart';
-import 'package:freedefense/game/game_main.dart';
-import 'package:freedefense/weapon/bullet_component.dart';
-import 'package:freedefense/weapon/cannon.dart';
-import 'package:freedefense/weapon/weapon_component.dart';
+import '../base/game_component.dart';
+import '../base/radar.dart';
+import '../base/scanable.dart';
+import '../enemy/enemy_component.dart';
+import '../game/game_main.dart';
+import '../game_controller/game_controller.dart';
+import '../weapon/bullet_component.dart';
+import '../weapon/cannon.dart';
+import '../weapon/weapon_component.dart';
 
 class GameTest extends GameMain with GameDebug {
+  GameTest({required GameController gameController})
+      : super(gameController: gameController);
+
   @override
   Future<void> onLoad() async {
     // recordTime();
@@ -82,7 +86,8 @@ mixin GameDebug on GameMain {
 
     int weapon = 0, enemy = 0, cannon = 0, bullet = 0, exp = 0;
     int radar = 0, scanable = 0;
-    GameComponent c = gameController;
+    GameComponent c = read<GameController>();
+    // gameController;
 
     void _count(c) {
       if (c is WeaponComponent) weapon++;

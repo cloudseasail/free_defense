@@ -2,8 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_ref.dart';
-import 'package:freedefense/game/game_main.dart';
+import '../base/game_ref.dart';
+import '../game/game_main.dart';
 
 class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
   Sprite? sprite;
@@ -64,5 +64,11 @@ class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
 
   Vector2 positionInPrarent(Vector2 point) {
     return point + position;
+  }
+
+  Vector2 screenPosition() {
+    return gameRef.camera.worldToScreen(
+      position,
+    );
   }
 }

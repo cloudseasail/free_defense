@@ -4,10 +4,10 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/base/radar.dart';
-import 'package:freedefense/enemy/enemy_component.dart';
-import 'package:freedefense/game/game_controller.dart';
+import '../base/game_component.dart';
+import '../base/radar.dart';
+import '../enemy/enemy_component.dart';
+import '../game_controller/game_controller.dart';
 
 class SmartRotateEffect extends RotateEffect {
   Function? onComplete;
@@ -48,7 +48,7 @@ class SmartRotateEffect extends RotateEffect {
   }
 }
 
-enum WeaponType { CANNON, MG, MISSILE, MINNER }
+enum WeaponType { cannon, mg, missele, minner, none }
 
 class BarrelComponent extends GameComponent {
   BarrelComponent({required Vector2 position, required Vector2 size})
@@ -177,12 +177,12 @@ class WeaponComponent extends GameComponent
   bool onTapDown(TapDownInfo event) {
     if (buildDone == false) {
       if (buildAllowed) {
-        gameRef.gameController.send(this, GameControl.WEAPON_BUILD_DONE);
+        gameRef.gameController.send(this, GameControl.weaponBuildDone);
         onBuildDone();
       }
     } else {
       if (active) {
-        gameRef.gameController.send(this, GameControl.WEAPON_SHOW_ACTION);
+        gameRef.gameController.send(this, GameControl.weaponShowAction);
       } else {
         return true;
         // gameRef.gameController.send(this, GameControl.WEAPON_SHOW_PROFILE);

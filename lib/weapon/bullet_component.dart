@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/base/movable.dart';
-import 'package:freedefense/base/radar.dart';
-import 'package:freedefense/enemy/enemy_component.dart';
+import '../base/game_component.dart';
+import '../base/movable.dart';
+import '../base/radar.dart';
+import '../enemy/enemy_component.dart';
 
 class BulletComponent extends GameComponent
     with Movable, Radar<EnemyComponent> {

@@ -121,7 +121,7 @@ class WeaponSetting {
   late final Vector2 explosionSize;
   late final List<Sprite> explosionSprites;
 
-  WeaponSetting.empty() {}
+  WeaponSetting.empty();
 
   fill(weaponParam, tileSize, weaponTower, images) async {
     label = weaponParam['label'];
@@ -131,14 +131,21 @@ class WeaponSetting {
     fireInterval = weaponParam['fireInterval'];
     rotateSpeed = pi * weaponParam['rotateSpeed'];
     bulletSpeed = tileSize * weaponParam['bulletSpeed'];
-    size = gameSetting.scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
-    bulletSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
-    explosionSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
+    size = gameSetting
+        .scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
+    bulletSize = gameSetting.scaleOnMapTile(
+        Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
+    explosionSize = gameSetting.scaleOnMapTile(
+        Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
     tower = weaponTower;
-    barrel[0] = Sprite(await images.load('weapon/${weaponParam['barrelImg0']}.png'));
-    barrel[1] = Sprite(await images.load('weapon/${weaponParam['barrelImg1']}.png'));
-    barrel[2] = Sprite(await images.load('weapon/${weaponParam['barrelImg2']}.png'));
-    bullet = Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
+    barrel[0] =
+        Sprite(await images.load('weapon/${weaponParam['barrelImg0']}.png'));
+    barrel[1] =
+        Sprite(await images.load('weapon/${weaponParam['barrelImg1']}.png'));
+    barrel[2] =
+        Sprite(await images.load('weapon/${weaponParam['barrelImg2']}.png'));
+    bullet =
+        Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
   }
 
   void createExpolosionAnimation(List<Vector2> frameLocation, double stepTime) {
@@ -164,7 +171,8 @@ class WeaponSettingV1 {
     double tileSize = gameSetting.mapTileSize.length;
     List<Vector2> expFrame = [];
 
-    String weaponParamsString = await loadAsset('weaponParams.json');
+    String weaponParamsString =
+        await rootBundle.loadString('assets/weaponParams.json');
 
     final weaponParams = json.decode(weaponParamsString);
 
