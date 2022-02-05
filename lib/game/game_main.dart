@@ -69,10 +69,6 @@ class GameMain extends FlameGame with HasTappables {
     print("GameMain onLoad done takke $d");
   }
 
-  void stop() {
-    gameController.enemyFactory.stop();
-  }
-
   @override
   void update(double t) {
     super.update(t);

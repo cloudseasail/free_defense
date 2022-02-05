@@ -89,7 +89,7 @@ class GameInstruction {
         break;
       case GameControl.GAME_OVER:
         controller.gameRef.overlays.add('gameover');
-        controller.gameRef.stop();
+        controller.gameRef.pauseEngine();
         break;
       default:
     }
