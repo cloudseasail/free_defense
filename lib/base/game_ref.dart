@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:freedefense/game/game_main.dart';
+import '../game/game_main.dart';
 
 mixin GameRef<T extends GameMain> on Component {
   T? _gameRef;

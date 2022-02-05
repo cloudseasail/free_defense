@@ -1,7 +1,7 @@
 import 'package:flame/extensions.dart';
-import 'package:freedefense/astar/astarnode.dart';
-import 'package:freedefense/map/astarmap_minxin.dart';
-import 'package:freedefense/base/game_component.dart';
+import '../astar/astarnode.dart';
+import '../map/astarmap_minxin.dart';
+import '../base/game_component.dart';
 
 import 'map_tile_component.dart';
 

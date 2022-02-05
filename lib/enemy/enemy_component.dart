@@ -1,16 +1,17 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:freedefense/astar/astarnode.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/base/life_indicator.dart';
-import 'package:freedefense/base/movable.dart';
-import 'package:freedefense/base/scanable.dart';
+import '../astar/astarnode.dart';
+import '../base/game_component.dart';
+import '../base/life_indicator.dart';
+import '../base/movable.dart';
+import '../base/scanable.dart';
+
 import 'dart:math';
+import '../game_controller/game_controller.dart';
+import '../ui/stage_bar/bloc/stage_bar_bloc.dart';
 
-import 'package:freedefense/game/game_controller.dart';
-
-enum EnemyType { ENEMYA, ENEMYB, ENEMYC, ENEMYD }
+enum EnemyType { enemyA, enemyB, enemyC, enemyD }
 
 class EnemyComponent extends GameComponent
     with Scanable, Movable, EnemySmartMove, LifeIndicator {
@@ -64,16 +65,17 @@ class EnemyComponent extends GameComponent
   void onArrived() {
     if (!dead) {
       active = false;
-      gameRef.gameController.send(this, GameControl.ENEMY_MISSED);
-      this.removeFromParent();
+      gameRef.gameController.send(this, GameControl.enemyMissed);
+      removeFromParent();
     }
   }
 
   void onKilled() {
     active = false;
-    gameRef.gameController.send(this, GameControl.ENEMY_KILLED);
-    gameRef.gamebarView.mineCollected += mineValue;
-    this.removeFromParent();
+    gameRef.gameController.send(this, GameControl.enemyKilled);
+    gameRef.read<StageBarBloc>().add(SbAddMinerals(mineValue));
+    // gameRef.gamebarView.mineCollected += mineValue;
+    removeFromParent();
   }
 }
 
@@ -103,10 +105,9 @@ mixin EnemySmartMove on GameComponent {
       return lefttop + (gameRef.mapController.tileSize / 2);
     } else {
       Vector2 lefttop = gameRef.mapController.nodeToPosition(node);
-      Vector2 randomArea = Vector2(
-          gameRef.mapController.tileSize.x - this.size.x,
-          gameRef.mapController.tileSize.y - this.size.y);
-      lefttop = lefttop + Vector2(this.size.x / 2, this.size.y / 2);
+      Vector2 randomArea = Vector2(gameRef.mapController.tileSize.x - size.x,
+          gameRef.mapController.tileSize.y - size.y);
+      lefttop = lefttop + Vector2(size.x / 2, size.y / 2);
       double rndx = Random().nextDouble();
       double rndy = Random().nextDouble();
       return lefttop + Vector2(randomArea.x * rndx, randomArea.y * rndy);

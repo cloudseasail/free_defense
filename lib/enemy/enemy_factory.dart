@@ -1,10 +1,9 @@
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/enemy/enemy_component.dart';
-import 'package:freedefense/enemy/enmey_v1.dart';
+import '../base/game_component.dart';
+import '../enemy/enemy_component.dart';
+import '../enemy/enmey_v1.dart';
 import 'dart:math' as math;
-
-import 'package:freedefense/game/game_controller.dart';
+import '../game_controller/game_controller.dart';
 
 class EnemyFactory extends GameComponent {
   EnemyFactory() : super(position: Vector2.zero(), size: Vector2.zero()) {
@@ -36,7 +35,7 @@ class EnemyFactory extends GameComponent {
 
   void nextWave() {
     currentWave++;
-    gameRef.gameController.send(this, GameControl.ENEMY_NEXT_WAVE);
+    gameRef.gameController.send(this, GameControl.enemyNexWave);
     switch (currentWave) {
       case 1:
         spawnEnemy(20, 1.2, spawnEnemyA);
@@ -80,10 +79,10 @@ class EnemyFactory extends GameComponent {
     }
   }
 
-  void spawnEnemyA() => spawnOneEnemy(EnemyType.ENEMYA);
-  void spawnEnemyB() => spawnOneEnemy(EnemyType.ENEMYB);
-  void spawnEnemyC() => spawnOneEnemy(EnemyType.ENEMYC);
-  void spawnEnemyD() => spawnOneEnemy(EnemyType.ENEMYD);
+  void spawnEnemyA() => spawnOneEnemy(EnemyType.enemyA);
+  void spawnEnemyB() => spawnOneEnemy(EnemyType.enemyB);
+  void spawnEnemyC() => spawnOneEnemy(EnemyType.enemyC);
+  void spawnEnemyD() => spawnOneEnemy(EnemyType.enemyD);
   void spawnEnemyMix() {
     math.Random rnd = math.Random();
     int r = rnd.nextInt(4);

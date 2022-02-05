@@ -1,25 +1,25 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/game/game_setting.dart';
-import 'package:freedefense/weapon/bullet_component.dart';
-import 'package:freedefense/weapon/weapon_component.dart';
+import '../base/game_component.dart';
+import '../game/game_setting.dart';
+import '../weapon/bullet_component.dart';
+import '../weapon/weapon_component.dart';
 
 class MachineGun extends WeaponComponent {
   static final WeaponSetting setting =
-      GameSetting().weapons.weapon[WeaponType.MG.index];
+      GameSetting().weapons.weapon[WeaponType.mg.index];
   MachineGun({
     required Vector2 position,
   }) : super(position: position, size: setting.size) {
-    this.size = setting.size;
-    this.weaponType = WeaponType.MG;
-    this.range = setting.range;
-    this.fireInterval = setting.fireInterval;
-    this.sprite = setting.tower;
-    this.barrel.sprite = setting.barrel[0];
-    this.barrel.size = size;
-    this.barrel.rotateSpeed = setting.rotateSpeed;
+    size = setting.size;
+    weaponType = WeaponType.mg;
+    range = setting.range;
+    fireInterval = setting.fireInterval;
+    sprite = setting.tower;
+    barrel.sprite = setting.barrel[0];
+    barrel.size = size;
+    barrel.rotateSpeed = setting.rotateSpeed;
   }
 
   @override

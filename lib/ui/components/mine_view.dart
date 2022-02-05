@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/game/game_setting.dart';
+import '../../base/game_component.dart';
+import '../../game/game_setting.dart';
 
 class MineView extends GameComponent {
   late GameComponent icon;

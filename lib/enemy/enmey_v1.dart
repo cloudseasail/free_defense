@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:freedefense/game/game_setting.dart';
-import 'package:freedefense/enemy/enemy_component.dart';
+import '../game/game_setting.dart';
+import '../enemy/enemy_component.dart';
 
 GameSetting setting = GameSetting();
 

@@ -9,7 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.0.0
+   # for using ui flutter with flame
+  flame_bloc: ^1.1.0
+  equatable: ^2.0.3
+  flutter_bloc: ^8.0.1
+  # flame_tiled: ^1.2.1
+  # fast_immutable_collections: ^7.1.3
+  bloc: ^8.0.2
+
 
 dev_dependencies:
   flutter_test:

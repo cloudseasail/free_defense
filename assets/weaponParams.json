@@ -1,6 +1,6 @@
 [
   {
-    "label": "CANNON",
+    "label": "cannon",
     "cost": 10,
     "range": 1.5,
     "damage": 15.0,
@@ -19,7 +19,7 @@
     "bulletImg": "Bullet1"
   },
   {
-    "label": "MG",
+    "label": "mg",
     "cost": 15,
     "range": 2,
     "damage": 5.0,
@@ -38,7 +38,7 @@
     "bulletImg": "Bullet2"
   },
   {
-    "label": "MISSILE",
+    "label": "missele",
     "cost": 30,
     "range": 3,
     "damage": 30.0,

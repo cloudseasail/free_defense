@@ -1,17 +1,18 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/game/game_controller.dart';
-import 'package:freedefense/game/game_setting.dart';
-import 'package:freedefense/map/map_controller.dart';
-import 'package:freedefense/view/gamebar_view.dart';
-import 'package:freedefense/view/weapon_factory_view.dart';
+import 'package:flame_bloc/flame_bloc.dart';
+import '../base/game_component.dart';
 
-class GameMain extends FlameGame with HasTappables {
+import '../game/game_setting.dart';
+import '../game_controller/game_controller.dart';
+import '../map/map_controller.dart';
+import '../ui/stage_bar/bloc/stage_bar_bloc.dart';
+
+class GameMain extends FlameBlocGame with HasTappables {
   late MapController mapController;
-  late WeaponFactoryView weaponFactory;
-  late GameController gameController;
-  late GamebarView gamebarView;
+  // late WeaponFactoryView weaponFactory;
+  GameController gameController;
+  // late GamebarView gamebarView;
   bool started = false;
 
   bool loadDone = false;
@@ -23,7 +24,7 @@ class GameMain extends FlameGame with HasTappables {
   // StatusBar statusBar;
   // GameUtil util;
 
-  GameMain();
+  GameMain({required this.gameController});
 
   @override
   void onGameResize(Vector2 size) {
@@ -32,7 +33,7 @@ class GameMain extends FlameGame with HasTappables {
   }
 
   int currentTimeMillis() {
-    return new DateTime.now().millisecondsSinceEpoch;
+    return DateTime.now().millisecondsSinceEpoch;
   }
 
   @override
@@ -49,24 +50,26 @@ class GameMain extends FlameGame with HasTappables {
         position: setting.mapPosition,
         size: setting.mapSize);
     /*game controller should have same range as map */
-    gameController =
-        GameController(position: setting.mapPosition, size: setting.mapSize);
+    gameController = gameController
+      ..position = setting.mapPosition
+      ..size = setting.mapSize;
 
-    gamebarView = GamebarView();
-    weaponFactory = WeaponFactoryView();
+    // gamebarView = GamebarView();
+    // weaponFactory = WeaponFactoryView();
 
     await setting.weapons.load();
 
     add(mapController);
     add(gameController);
-    add(gamebarView);
-    add(weaponFactory);
-
+    // add(gamebarView);
+    // add(weaponFactory);
+    // await add(interface ?? GameInterface());
     setting.enemies.load();
 
     loadDone = true;
     int d = currentTimeMillis() - timeRecord;
     print("GameMain onLoad done takke $d");
+    pauseEngine();
   }
 
   @override
@@ -85,10 +88,10 @@ class GameMain extends FlameGame with HasTappables {
 
   void start() {
     if (loadDone) {
-      gameController.send(GameComponent(), GameControl.ENEMY_SPAWN);
-      gamebarView.killedEnemy = 0;
-      gamebarView.mineCollected = 999;
-      gamebarView.missedEnemy = 0;
+      gameController.send(GameComponent(), GameControl.enemySpawn);
+      read<StageBarBloc>().add(const SbSetKilled(0));
+      read<StageBarBloc>().add(const SbSetMissed(0));
+      read<StageBarBloc>().add(const SbSetMinerals(400));
     }
   }
 }

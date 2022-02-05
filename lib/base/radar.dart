@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
+import '../base/game_component.dart';
 
 mixin Radar<T> on GameComponent {
   bool _radarOn = false;

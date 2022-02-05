@@ -1,19 +1,19 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
-import 'package:freedefense/game/game_setting.dart';
-import 'package:freedefense/weapon/bullet_component.dart';
-import 'package:freedefense/weapon/weapon_component.dart';
+import '../base/game_component.dart';
+import '../game/game_setting.dart';
+import '../weapon/bullet_component.dart';
+import '../weapon/weapon_component.dart';
 
 class Cannon extends WeaponComponent {
   static final WeaponSetting setting =
-      GameSetting().weapons.weapon[WeaponType.CANNON.index];
+      GameSetting().weapons.weapon[WeaponType.cannon.index];
   Cannon({
     required Vector2 position,
   }) : super(position: position, size: setting.size) {
     this.size = setting.size;
-    this.weaponType = WeaponType.CANNON;
+    this.weaponType = WeaponType.cannon;
     this.range = setting.range;
     this.fireInterval = setting.fireInterval;
     this.sprite = setting.tower;

@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:freedefense/base/game_component.dart';
+import '../base/game_component.dart';
 import 'dart:math';
 
 mixin Movable on GameComponent {
