@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
+import 'package:freedefense/game/game_controller.dart';
 import 'package:freedefense/game/game_setting.dart';
 import 'package:freedefense/view/mine_view.dart';
 
@@ -22,6 +23,7 @@ class GamebarView extends GameComponent {
   int _killedEnemy = 0;
   int _missedEnemy = 0;
   int _mineCollected = 0;
+  int _lives = 20;
 
   @override
   Future<void>? onLoad() {
@@ -73,7 +75,10 @@ class GamebarView extends GameComponent {
   int get missedEnemy => _missedEnemy;
   set missedEnemy(int n) {
     _missedEnemy = n;
-    missedStatus.text = 'Missed: $_missedEnemy';
+    missedStatus.text = 'Lives: ${_lives - _missedEnemy}';
+    if (_lives - _missedEnemy <= 0) {
+      gameRef.gameController.send(this, GameControl.GAME_OVER);
+    }
   }
 
   int get mineCollected => _mineCollected;
