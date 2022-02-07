@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flame/assets.dart';
 import 'package:flame/components.dart';
@@ -164,9 +165,14 @@ class WeaponSettingV1 {
     double tileSize = gameSetting.mapTileSize.length;
     List<Vector2> expFrame = [];
 
-    String weaponParamsString = await loadAsset('weaponParams.json');
-
+    String weaponParamsString = await loadAsset('assets/weaponParams.json');
     final weaponParams = json.decode(weaponParamsString);
+
+    // Preloading these fixes issue with GameBar not showing Missile_Launcher barrel
+    for(var weaponParam in weaponParams) {
+      Image image0 = await images.load(
+          'weapon/${weaponParam['barrelImg0']}.png');
+    }
 
     WeaponSetting w = WeaponSetting.empty()
       ..explosion = SpriteSheet.fromColumnsAndRows(

@@ -81,9 +81,13 @@ class EnemyFactory extends GameComponent {
   }
 
   void spawnEnemyA() => spawnOneEnemy(EnemyType.ENEMYA);
+
   void spawnEnemyB() => spawnOneEnemy(EnemyType.ENEMYB);
+
   void spawnEnemyC() => spawnOneEnemy(EnemyType.ENEMYC);
+
   void spawnEnemyD() => spawnOneEnemy(EnemyType.ENEMYD);
+
   void spawnEnemyMix() {
     math.Random rnd = math.Random();
     int r = rnd.nextInt(4);

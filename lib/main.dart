@@ -22,6 +22,7 @@ void main() async {
       overlayBuilderMap: {
         WeaponViewWidget.name: WeaponViewWidget.builder,
         'start': _pauseMenuBuilder,
+        'gameover': _gameOverBuilder,
       },
       initialActiveOverlays: const ['start'],
     ),
@@ -48,6 +49,27 @@ Widget _pauseMenuBuilder(BuildContext buildContext, GameMain game) {
       child: const Text('Start'),
     )),
   ));
+}
+
+Widget _gameOverBuilder(BuildContext buildContext, GameMain game) {
+  return Center(
+      child: Container(
+        width: 100,
+        height: 100,
+        color: Colors.red,
+        child: Center(
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(16.0),
+                primary: Colors.white,
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                game.overlays.remove('gameover');
+              },
+              child: const Text('Game Over'),
+            )),
+      ));
 }
 
 void test() {}
