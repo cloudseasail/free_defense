@@ -9,6 +9,8 @@ import 'package:freedefense/base/radar.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
 import 'package:freedefense/game/game_controller.dart';
 
+import '../game/game_setting.dart';
+
 class SmartRotateEffect extends RotateEffect {
   Function? onComplete;
   SmartRotateEffect.to(double angle, EffectController controller)
@@ -81,12 +83,14 @@ class WeaponComponent extends GameComponent
   late double range;
   late double fireInterval;
   late BarrelComponent barrel;
+  late WeaponSetting setting;
+  int barrelModelIndex = 0;
 
   WeaponComponent({
     required Vector2 position,
-    required Vector2 size,
+    required WeaponSetting weaponSetting,
     double life = 100,
-  }) : super(position: position, size: size, priority: 20) {
+  }) : super(position: position, size: weaponSetting.size, priority: 20) {
     barrel = BarrelComponent(position: size / 2, size: size);
     add(barrel);
 
@@ -96,6 +100,7 @@ class WeaponComponent extends GameComponent
   bool blockMap = false;
   bool blockEnemy = true;
   bool buildDone = false;
+  bool dialogVisible = false;
   bool active = true;
   get buildAllowed => ((blockMap == false) && (blockEnemy == false));
 
@@ -126,6 +131,18 @@ class WeaponComponent extends GameComponent
         onTick: () => radarOn = true));
   }
 
+  void upgradeBarrel() {
+    barrelModelIndex++;
+    barrel.sprite = setting.barrel[barrelModelIndex];
+    range *= setting.rangeDelta;
+    radarRange = range;
+    fireInterval /= setting.fireIntervalDelta;
+    setting.currentDamage *= setting.damageDelta;
+    setting.bulletSpeed *= setting.bulletSpeedDelta;
+
+    //rotateSpeedDelta = weaponParam['rotateSpeedDelta'];
+  }
+
   void onBuilding() {
     buildDone = false;
     radarOn = true;
@@ -137,6 +154,7 @@ class WeaponComponent extends GameComponent
 
   void onBuildDone() {
     buildDone = true;
+    dialogVisible = false;
     radarOn = true;
     radarRange = range;
     radarScanAlert = onEnemyAttack;
@@ -158,7 +176,7 @@ class WeaponComponent extends GameComponent
 
   @override
   void render(Canvas canvas) {
-    if (buildDone == false) {
+    if (buildDone == false || dialogVisible == true) {
       Color? color = buildAllowed ? Colors.green[200] : Colors.red[200];
       /*build indicator */
       canvas.drawRect(size.toRect(), Paint()..color = color!.withOpacity(0.3));
@@ -168,6 +186,17 @@ class WeaponComponent extends GameComponent
           Paint()
             ..style = PaintingStyle.stroke
             ..color = Colors.green);
+      if (dialogVisible == true) {
+        Color? color = buildAllowed ? Colors.blue[200] : Colors.red[200];
+        /*build indicator */
+        canvas.drawRect(size.toRect(), Paint()..color = color!.withOpacity(0.3));
+        canvas.drawCircle(
+            (size / 2).toOffset(),
+            range*1.25,
+            Paint()
+              ..style = PaintingStyle.stroke
+              ..color = Colors.green);
+      }
     }
 
     super.render(canvas);

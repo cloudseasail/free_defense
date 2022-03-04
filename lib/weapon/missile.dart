@@ -7,11 +7,12 @@ import 'package:freedefense/weapon/bullet_component.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
 
 class Missile extends WeaponComponent {
-  static final WeaponSetting setting =
-      GameSetting().weapons.weapon[WeaponType.MISSILE.index];
+
   Missile({
-    required Vector2 position,
-  }) : super(position: position, size: setting.size) {
+    required Vector2 position, required WeaponSetting weaponSetting
+  }) : super(position: position, weaponSetting: weaponSetting) {
+    setting =
+    GameSetting().weapons.weapon[WeaponType.MISSILE.index];
     this.size = setting.size;
     this.weaponType = WeaponType.MISSILE;
     this.range = setting.range;

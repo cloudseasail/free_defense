@@ -13,6 +13,10 @@ import 'package:freedefense/view/weapon_factory_view.dart';
 import 'package:freedefense/view/weaponview_widget.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
 
+import '../weapon/cannon.dart';
+import '../weapon/machine_gun.dart';
+import '../weapon/missile.dart';
+
 GameSetting gameSetting = GameSetting();
 
 enum GameControl {
@@ -192,5 +196,69 @@ class GameController extends GameComponent {
       ..sprite = Sprite(await images.load('whitehole.png'));
     add(gateStart);
     add(gateEnd);
+  }
+
+  void buildCanon(int i, double row) {
+    Vector2 enemyPos = Vector2(i.toDouble(), row);
+    enemyPos = gameSetting.dotMultiple(enemyPos, gameSetting.mapTileSize) +
+        (gameSetting.mapTileSize / 2);
+    WeaponComponent wc = new Cannon(position: enemyPos, weaponSetting: GameSetting().weapons.weapon[WeaponType.CANNON.index])
+      ..buildDone = true
+      ..dialogVisible = false
+      ..active = true;
+    add(wc);
+    gameRef.weaponFactory.onBuildDone(wc);
+    wc.onBuildDone();
+    gameRef.mapController.astarMapAddObstacle(enemyPos);
+    buildingWeapon = null;
+    processEnemySmartMove();
+  }
+
+  void buildMachineGun(int i, double row) {
+    Vector2 enemyPos = Vector2(i.toDouble(), row);
+    enemyPos = gameSetting.dotMultiple(enemyPos, gameSetting.mapTileSize) +
+        (gameSetting.mapTileSize / 2);
+    WeaponComponent wc = new MachineGun(position: enemyPos, weaponSetting: GameSetting().weapons.weapon[WeaponType.MG.index])
+      ..buildDone = true
+      ..dialogVisible = false
+      ..active = true;
+    add(wc);
+    gameRef.weaponFactory.onBuildDone(wc);
+    wc.onBuildDone();
+    gameRef.mapController.astarMapAddObstacle(enemyPos);
+    buildingWeapon = null;
+    processEnemySmartMove();
+  }
+
+  void buildMissile(int i, double row) {
+    Vector2 enemyPos = Vector2(i.toDouble(), row);
+    enemyPos = gameSetting.dotMultiple(enemyPos, gameSetting.mapTileSize) +
+        (gameSetting.mapTileSize / 2);
+    WeaponComponent wc = new Missile(position: enemyPos, weaponSetting: GameSetting().weapons.weapon[WeaponType.MISSILE.index])
+      ..buildDone = true
+      ..dialogVisible = false
+      ..active = true;
+    add(wc);
+    gameRef.weaponFactory.onBuildDone(wc);
+    wc.onBuildDone();
+    gameRef.mapController.astarMapAddObstacle(enemyPos);
+    buildingWeapon = null;
+    processEnemySmartMove();
+  }
+
+
+  void addDefaultWeapons() {
+    for (double row = 1; row < 15; row+=4) {
+      for (int i = 0; i < 8; i++) {
+        buildCanon(i, row);
+      }
+      for (int i = 8; i > 0; i--) {
+        if (i.isEven) {
+          buildMachineGun(i, row + 2);
+        }else {
+          buildMissile(i, row + 2);
+        }
+      }
+    }
   }
 }

@@ -98,6 +98,7 @@ class GameSetting {
 class NeutualSetting {
   late Sprite mine;
   late Sprite mineCluster;
+
   Future<void> load() async {
     final images = Images();
     mine = Sprite(await images.load('neutual/mine.png'));
@@ -113,10 +114,25 @@ class WeaponSetting {
   double damage = 0;
   double range = 0;
   double fireInterval = 0;
-  double rotateSpeed = pi * 2; /*r per sec */
-  double bulletSpeed = 0; /* d per sec */
+  double rotateSpeed = pi * 2;
+
+  /*r per sec */
+  double bulletSpeed = 0;
+
+  /* d per sec */
+
+  double damageDelta = 0;
+  double rangeDelta = 0;
+  double fireIntervalDelta = 0;
+  double rotateSpeedDelta = 0;
+  double bulletSpeedDelta = 0;
+
+  double currentDamage = 0;
+  double currentBulletSpeed = 0;
+
   late final Sprite tower;
   late final List<Sprite?> barrel = List.filled(3, null);
+  late final List<String?> paths = List.filled(3, null);
   late final Sprite bullet;
   late final SpriteSheet explosion;
   late final Vector2 explosionSize;
@@ -129,17 +145,32 @@ class WeaponSetting {
     cost = weaponParam['cost'];
     range = weaponParam['range'] * tileSize;
     damage = weaponParam['damage'];
+    currentDamage = damage;
     fireInterval = weaponParam['fireInterval'];
     rotateSpeed = pi * weaponParam['rotateSpeed'];
     bulletSpeed = tileSize * weaponParam['bulletSpeed'];
-    size = gameSetting.scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
-    bulletSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
-    explosionSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
+    currentBulletSpeed = bulletSpeed;
+    size = gameSetting
+        .scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
+    bulletSize = gameSetting.scaleOnMapTile(
+        Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
+    explosionSize = gameSetting.scaleOnMapTile(
+        Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
     tower = weaponTower;
-    barrel[0] = Sprite(await images.load('weapon/${weaponParam['barrelImg0']}.png'));
-    barrel[1] = Sprite(await images.load('weapon/${weaponParam['barrelImg1']}.png'));
-    barrel[2] = Sprite(await images.load('weapon/${weaponParam['barrelImg2']}.png'));
-    bullet = Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
+    paths[0] = 'weapon/${weaponParam['barrelImg0']}.png';
+    paths[1] = 'weapon/${weaponParam['barrelImg1']}.png';
+    paths[2] = 'weapon/${weaponParam['barrelImg2']}.png';
+    barrel[0] = Sprite(await images.load(paths[0]));
+    barrel[1] = Sprite(await images.load(paths[1]));
+    barrel[2] = Sprite(await images.load(paths[2]));
+    bullet =
+        Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
+
+    damageDelta = weaponParam['damageDelta'];
+    rangeDelta = weaponParam['rangeDelta'];
+    fireIntervalDelta = weaponParam['fireIntervalDelta'];
+    rotateSpeedDelta = weaponParam['rotateSpeedDelta'];
+    bulletSpeedDelta = weaponParam['bulletSpeedDelta'];
   }
 
   void createExpolosionAnimation(List<Vector2> frameLocation, double stepTime) {
@@ -158,7 +189,9 @@ Future<String> loadAsset(String assetFileName) async {
 
 class WeaponSettingV1 {
   List<WeaponSetting> weapon = [];
+
   WeaponSettingV1();
+
   Future<void> load() async {
     final images = Images();
     Sprite weaponTower = Sprite(await images.load('weapon/Tower.png'));
@@ -169,9 +202,9 @@ class WeaponSettingV1 {
     final weaponParams = json.decode(weaponParamsString);
 
     // Preloading these fixes issue with GameBar not showing Missile_Launcher barrel
-    for(var weaponParam in weaponParams) {
-      Image image0 = await images.load(
-          'weapon/${weaponParam['barrelImg0']}.png');
+    for (var weaponParam in weaponParams) {
+      Image image0 =
+          await images.load('weapon/${weaponParam['barrelImg0']}.png');
     }
 
     WeaponSetting w = WeaponSetting.empty()
@@ -221,12 +254,15 @@ class EnemySetting {
   late final double scale;
   late final double enemySize;
   late final SpriteSheet spriteSheet;
+
   EnemySetting();
 }
 
 class EnemySettingV1 {
   List<EnemySetting> enemy = [];
+
   EnemySettingV1();
+
   final images = Images();
 
   Future<void> load() async {

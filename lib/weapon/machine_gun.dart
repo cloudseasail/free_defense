@@ -7,11 +7,11 @@ import 'package:freedefense/weapon/bullet_component.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
 
 class MachineGun extends WeaponComponent {
-  static final WeaponSetting setting =
-      GameSetting().weapons.weapon[WeaponType.MG.index];
   MachineGun({
-    required Vector2 position,
-  }) : super(position: position, size: setting.size) {
+    required Vector2 position, required WeaponSetting weaponSetting
+  }) : super(position: position, weaponSetting: weaponSetting) {
+    setting =
+    GameSetting().weapons.weapon[WeaponType.MG.index];
     this.size = setting.size;
     this.weaponType = WeaponType.MG;
     this.range = setting.range;

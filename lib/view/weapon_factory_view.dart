@@ -119,6 +119,7 @@ class SingleWeaponView extends GameComponent with Tappable {
     weapon = build(wp)
       ..size = ws
       ..buildDone = true
+      ..dialogVisible = false
       ..active = false;
     mine = MineView(position: mp, size: ms);
 
@@ -152,13 +153,13 @@ class SingleWeaponView extends GameComponent with Tappable {
     late WeaponComponent weapon;
     switch (weaponType) {
       case WeaponType.CANNON:
-        weapon = Cannon(position: anchor);
+        weapon = Cannon(position: anchor, weaponSetting: GameSetting().weapons.weapon[WeaponType.CANNON.index]);
         break;
       case WeaponType.MG:
-        weapon = MachineGun(position: anchor);
+        weapon = MachineGun(position: anchor, weaponSetting: GameSetting().weapons.weapon[WeaponType.MG.index]);
         break;
       case WeaponType.MISSILE:
-        weapon = Missile(position: anchor);
+        weapon = Missile(position: anchor, weaponSetting: GameSetting().weapons.weapon[WeaponType.MISSILE.index]);
         break;
       default:
         break;

@@ -7,11 +7,11 @@ import 'package:freedefense/weapon/bullet_component.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
 
 class Cannon extends WeaponComponent {
-  static final WeaponSetting setting =
-      GameSetting().weapons.weapon[WeaponType.CANNON.index];
+
   Cannon({
-    required Vector2 position,
-  }) : super(position: position, size: setting.size) {
+    required Vector2 position, required WeaponSetting weaponSetting
+  }) : super(position: position, weaponSetting: weaponSetting) {
+    setting = weaponSetting;
     this.size = setting.size;
     this.weaponType = WeaponType.CANNON;
     this.range = setting.range;
@@ -27,9 +27,9 @@ class Cannon extends WeaponComponent {
     BulletComponent bullet =
         BulletComponent(position: _bulletPosition(), size: setting.bulletSize)
           ..angle = barrel.angle
-          ..damage = setting.damage
+          ..damage = setting.currentDamage
           ..sprite = setting.bullet
-          ..speed = setting.bulletSpeed
+          ..speed = setting.currentBulletSpeed
           ..onExplosion = bulletExplosion;
     bullet.moveTo(target);
     parent?.add(bullet);
