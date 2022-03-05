@@ -245,20 +245,4 @@ class GameController extends GameComponent {
     buildingWeapon = null;
     processEnemySmartMove();
   }
-
-
-  void addDefaultWeapons() {
-    for (double row = 1; row < 15; row+=4) {
-      for (int i = 0; i < 8; i++) {
-        buildCanon(i, row);
-      }
-      for (int i = 8; i > 0; i--) {
-        if (i.isEven) {
-          buildMachineGun(i, row + 2);
-        }else {
-          buildMissile(i, row + 2);
-        }
-      }
-    }
-  }
 }
