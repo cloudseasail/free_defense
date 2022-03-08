@@ -9,11 +9,15 @@ import 'package:freedefense/weapon/weapon_component.dart';
 
 class WeaponViewWidget {
   static const String name = 'weaponview';
+
   static Widget builder(BuildContext buildContext, GameMain game) {
     Vector2 size = Vector2(GameSetting().screenSize.x * 0.8, 500);
     Vector2 arrowSize = Vector2(20, 20);
-    if (_selected == null) return Center();
-
+    if (_selected == null) {
+      return Center();
+    } else {
+      _selected?.dialogVisible = false;
+    }
     Vector2 anchor =
         game.gameController.absolutePositionOf(_selected!.position);
     if (anchor.y > GameSetting().screenSize.y / 2) {
@@ -24,6 +28,13 @@ class WeaponViewWidget {
           anchor.y + _selected!.size.y / 2 + arrowSize.y);
     }
     anchor.x = GameSetting().screenSize.x / 2 - size.x / 2;
+    String imagePath = "";
+    int index =_selected?.barrelModelIndex ?? 2;
+    if (index < 2) {
+      imagePath = _selected?.setting.paths[(_selected?.barrelModelIndex ?? 0) + 1] ?? "";
+    }
+
+    _selected?.dialogVisible = true;
     return Positioned(
       top: anchor.y,
       left: anchor.x,
@@ -32,26 +43,46 @@ class WeaponViewWidget {
               image: DecorationImage(
                   image: AssetImage("assets/images/diaglog.png"),
                   fit: BoxFit.fill)),
-          width: size.x,
-          height: size.y,
+          width: size.x / 2,
+          height: size.y / 2,
           child: Stack(alignment: Alignment.center, children: [
+            (imagePath != "")
+                ? Positioned(
+                    top: 75,
+                    child: SpriteButton.asset(
+                      path: imagePath ,
+                      pressedPath: imagePath,
+                      width: 45,
+                      height: 45,
+                      onPressed: () {
+                        _selected?.upgradeBarrel();
+                        _selected?.dialogVisible = false;
+                        hide();
+                      },
+                      label: const Text(
+                        'Upgrade',
+                        style: TextStyle(color: Color(0xFF5D275D)),
+                      ),
+                    ))
+                : Container(),
             Positioned(
-                bottom: 100,
+                top: 25,
                 child: SpriteButton.asset(
                   path: 'destroy.png',
                   pressedPath: 'destroy2.png',
-                  width: 50,
-                  height: 50,
+                  width: 45,
+                  height: 45,
                   onPressed: () {
                     _selected?.active = false;
                     _selected?.removeFromParent();
                     _selected?.gameRef.gameController.send(
                         _selected as GameComponent,
                         GameControl.WEAPON_DESTROYED);
+                    _selected?.dialogVisible = false;
                     hide();
                   },
                   label: const Text(
-                    'Destroy',
+                    'Destroy0',
                     style: TextStyle(color: Color(0xFF5D275D)),
                   ),
                 ))
@@ -59,15 +90,21 @@ class WeaponViewWidget {
     );
   }
 
+  static int count = 0;
   static WeaponComponent? _selected;
 
   static show(WeaponComponent w) {
+    _selected?.dialogVisible = false;
     _selected = w;
-    _selected?.gameRef.overlays.add(name);
+    String finalName = "$name-${_selected?.weaponType}";
+    _selected?.gameRef.overlays.add(finalName);
   }
 
   static hide() {
-    _selected?.gameRef.overlays.remove(name);
+    _selected?.dialogVisible = false;
+    String finalName = "$name-${_selected?.weaponType}";
+    _selected?.gameRef.overlays.remove(finalName);
     _selected = null;
+    count++;
   }
 }

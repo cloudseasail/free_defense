@@ -20,7 +20,9 @@ void main() async {
     GameWidget<GameMain>(
       game: game,
       overlayBuilderMap: {
-        WeaponViewWidget.name: WeaponViewWidget.builder,
+        "${WeaponViewWidget.name}-WeaponType.CANNON": WeaponViewWidget.builder,
+        "${WeaponViewWidget.name}-WeaponType.MG": WeaponViewWidget.builder,
+        "${WeaponViewWidget.name}-WeaponType.MISSILE": WeaponViewWidget.builder,
         'start': _pauseMenuBuilder,
         'gameover': _gameOverBuilder,
       },
