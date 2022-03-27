@@ -94,17 +94,17 @@ class WeaponViewWidget {
   static WeaponComponent? _selected;
 
   static show(WeaponComponent w) {
-    _selected?.dialogVisible = false;
+    hide();
     _selected = w;
-    String finalName = "$name-${_selected?.weaponType}";
+    count++;
+    String finalName = "$name-${count % 2}";
     _selected?.gameRef.overlays.add(finalName);
   }
 
   static hide() {
     _selected?.dialogVisible = false;
-    String finalName = "$name-${_selected?.weaponType}";
+    String finalName = "$name-${count % 2}";
     _selected?.gameRef.overlays.remove(finalName);
     _selected = null;
-    count++;
   }
 }
