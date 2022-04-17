@@ -92,6 +92,10 @@ mixin EnemySmartMove on GameComponent {
       pathNode = pathNode!.next;
       if (pathNode != null) {
         (this as Movable).moveTo(moveRadomPosition(pathNode!), pathNextMove);
+      } else {
+        // If we reach the exit, but fail to hit it because of CPU load
+        // Just 'Arrive'
+        (this as EnemyComponent).onArrived();
       }
     }
   }

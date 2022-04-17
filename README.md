@@ -10,21 +10,21 @@ FreeDefense Game with Flutter and Flame.
 [Web version] http://freedefense.vquant.ml/
 
 Controls:
-- Click:  preview the weapon.  (donot block the enemies!)
+- Click:  preview the weapon.  (do not block the enemies!)
 - Click again: build weapon.
-- Clink on weapon,  update and destroy the weapon
+- Click on weapon: update and destroy the weapon
 - Collect mine to build weapon
 
 ## TODO
 * [ ] Game 
     - [ ] Toast to indicate wrong action
     - [ ] Game guide
-    - [ ] Collect coin and use coin to create cannon
+    - [v] Collect coin and use coin to create cannon
     - [ ] Game Failure/Re-start
 * [ ] Weapons
     - [ ] Add more Weapon types
-    - [ ] Upgrade Weapon with more featurs. (faster bullet/better aiming/more damage)
-* [ ] Enemies
+    - [v] Upgrade Weapon with more features. (faster bullet/better aiming/more damage)
+* [v] Enemies
     - [v] Add life indicator
 * [ ] Next version [TBD]
     - [ ] More topography 
