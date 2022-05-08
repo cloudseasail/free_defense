@@ -22,3 +22,4 @@ flutter:
     - assets/images/neutual/
     - assets/images/
     - assets/weaponParams.json
+    - assets/enemyParams.json

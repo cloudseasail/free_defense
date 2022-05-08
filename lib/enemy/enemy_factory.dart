@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
-import 'package:freedefense/enemy/enmey_v1.dart';
+import 'package:freedefense/enemy/enemy_v1.dart';
 import 'dart:math' as math;
 
 import 'package:freedefense/game/game_controller.dart';
