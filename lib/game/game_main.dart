@@ -17,7 +17,7 @@ class GameMain extends FlameGame with HasTappables {
   bool loadDone = false;
 
   // GameView view = GameView();
-  GameSetting setting = GameSetting();
+  GameSetting gameSetting = GameSetting();
   // GameController controller = GameController();
   // EnemySpawner enemySpawner = EnemySpawner();
   // StatusBar statusBar;
@@ -55,7 +55,7 @@ class GameMain extends FlameGame with HasTappables {
     gamebarView = GamebarView();
     weaponFactory = WeaponFactoryView();
 
-    await setting.weapons.load();
+    await setting.weapons.load(gameSetting);
 
     add(mapController);
     add(gameController);

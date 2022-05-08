@@ -5,6 +5,7 @@ import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/game/game_setting.dart';
 import 'package:freedefense/weapon/bullet_component.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
+import 'package:freedefense/weapon/weapon_setting.dart';
 
 class Missile extends WeaponComponent {
 

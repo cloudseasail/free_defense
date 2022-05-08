@@ -1,13 +1,11 @@
-import 'dart:convert';
-import 'dart:math';
-import 'dart:ui';
-
-import 'package:flame/assets.dart';
 import 'package:flame/components.dart';
 import 'dart:math' as math;
 
-import 'package:flame/sprite.dart';
 import 'package:flutter/services.dart';
+
+import '../enemy/enemy_setting.dart';
+import '../neutual/neutral_setting.dart';
+import '../weapon/weapon_setting.dart';
 
 GameSetting gameSetting = GameSetting();
 
@@ -90,217 +88,11 @@ class GameSetting {
 
   Future<void> onLoad() async {
     await neutual.load();
-    await weapons.load();
+    await weapons.load(gameSetting);
     await enemies.load();
-  }
-}
-
-class NeutualSetting {
-  late Sprite mine;
-  late Sprite mineCluster;
-
-  Future<void> load() async {
-    final images = Images();
-    mine = Sprite(await images.load('neutual/mine.png'));
-    mineCluster = Sprite(await images.load('neutual/mine_cluster.png'));
-  }
-}
-
-class WeaponSetting {
-  String label = "";
-  int cost = 0;
-  late Vector2 size;
-  late Vector2 bulletSize;
-  double damage = 0;
-  double range = 0;
-  double fireInterval = 0;
-  double rotateSpeed = pi * 2;
-
-  /*r per sec */
-  double bulletSpeed = 0;
-
-  /* d per sec */
-
-  double damageDelta = 0;
-  double rangeDelta = 0;
-  double fireIntervalDelta = 0;
-  double rotateSpeedDelta = 0;
-  double bulletSpeedDelta = 0;
-
-  double currentDamage = 0;
-  double currentBulletSpeed = 0;
-
-  late final Sprite tower;
-  late final List<Sprite?> barrel = List.filled(3, null);
-  late final List<String?> paths = List.filled(3, null);
-  late final Sprite bullet;
-  late final SpriteSheet explosion;
-  late final Vector2 explosionSize;
-  late final List<Sprite> explosionSprites;
-
-  WeaponSetting.empty() {}
-
-  fill(weaponParam, tileSize, weaponTower, images) async {
-    label = weaponParam['label'];
-    cost = weaponParam['cost'];
-    range = weaponParam['range'] * tileSize;
-    damage = weaponParam['damage'];
-    currentDamage = damage;
-    fireInterval = weaponParam['fireInterval'];
-    rotateSpeed = pi * weaponParam['rotateSpeed'];
-    bulletSpeed = tileSize * weaponParam['bulletSpeed'];
-    currentBulletSpeed = bulletSpeed;
-    size = gameSetting
-        .scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
-    bulletSize = gameSetting.scaleOnMapTile(
-        Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
-    explosionSize = gameSetting.scaleOnMapTile(
-        Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
-    tower = weaponTower;
-    paths[0] = 'weapon/${weaponParam['barrelImg0']}.png';
-    paths[1] = 'weapon/${weaponParam['barrelImg1']}.png';
-    paths[2] = 'weapon/${weaponParam['barrelImg2']}.png';
-    barrel[0] = Sprite(await images.load(paths[0]));
-    barrel[1] = Sprite(await images.load(paths[1]));
-    barrel[2] = Sprite(await images.load(paths[2]));
-    bullet =
-        Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
-
-    damageDelta = weaponParam['damageDelta'];
-    rangeDelta = weaponParam['rangeDelta'];
-    fireIntervalDelta = weaponParam['fireIntervalDelta'];
-    rotateSpeedDelta = weaponParam['rotateSpeedDelta'];
-    bulletSpeedDelta = weaponParam['bulletSpeedDelta'];
-  }
-
-  void createExpolosionAnimation(List<Vector2> frameLocation, double stepTime) {
-    List<Sprite> sprites = [];
-    frameLocation.forEach(
-        (v) => sprites.add(explosion.getSprite(v.x.toInt(), v.y.toInt())));
-    explosionSprites = sprites;
-    // explosionAnimation =
-    //     SpriteAnimation.spriteList(sprites, stepTime: stepTime, loop: false);
   }
 }
 
 Future<String> loadAsset(String assetFileName) async {
   return await rootBundle.loadString(assetFileName);
-}
-
-class WeaponSettingV1 {
-  List<WeaponSetting> weapon = [];
-
-  WeaponSettingV1();
-
-  Future<void> load() async {
-    final images = Images();
-    Sprite weaponTower = Sprite(await images.load('weapon/Tower.png'));
-    double tileSize = gameSetting.mapTileSize.length;
-    List<Vector2> expFrame = [];
-
-    String weaponParamsString = await loadAsset('assets/weaponParams.json');
-    final weaponParams = json.decode(weaponParamsString);
-
-    // Preloading these fixes issue with GameBar not showing Missile_Launcher barrel
-    for (var weaponParam in weaponParams) {
-      Image image0 =
-          await images.load('weapon/${weaponParam['barrelImg0']}.png');
-    }
-
-    WeaponSetting w = WeaponSetting.empty()
-      ..explosion = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('weapon/explosion1.png'),
-        columns: 8,
-        rows: 8,
-      );
-    w.fill(weaponParams[0], tileSize, weaponTower, images);
-
-    expFrame = [];
-    expFrame = List<Vector2>.generate(8, (i) => Vector2(i % 8, 4));
-    w.createExpolosionAnimation(expFrame, 1.5);
-    weapon.add(w);
-
-    w = WeaponSetting.empty()
-      ..explosion = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('weapon/explosion2.png'),
-        columns: 6,
-        rows: 1,
-      );
-    w.fill(weaponParams[1], tileSize, weaponTower, images);
-
-    expFrame = [];
-    expFrame = List<Vector2>.generate(6, (i) => Vector2(0, i % 6));
-    w.createExpolosionAnimation(expFrame, 0.05);
-    weapon.add(w);
-
-    w = WeaponSetting.empty()
-      ..explosion = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('weapon/explosion3.png'),
-        columns: 5,
-        rows: 3,
-      );
-    w.fill(weaponParams[2], tileSize, weaponTower, images);
-
-    expFrame = [];
-    expFrame = List<Vector2>.generate(6, (i) => Vector2(i / 2, (i % 2) * 3));
-    w.createExpolosionAnimation(expFrame, 0.1);
-    weapon.add(w);
-  }
-}
-
-class EnemySetting {
-  late final double life;
-  late final double speed;
-  late final double scale;
-  late final double enemySize;
-  late final SpriteSheet spriteSheet;
-
-  EnemySetting();
-}
-
-class EnemySettingV1 {
-  List<EnemySetting> enemy = [];
-
-  EnemySettingV1();
-
-  final images = Images();
-
-  Future<void> load() async {
-    enemy.add(EnemySetting()
-      ..life = 80
-      ..speed = 50
-      ..scale = 0.8
-      ..spriteSheet = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('enemy/enemyA.png'),
-        columns: 2,
-        rows: 3,
-      ));
-    enemy.add(EnemySetting()
-      ..life = 150
-      ..speed = 60
-      ..scale = 1.0
-      ..spriteSheet = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('enemy/enemyB.png'),
-        columns: 2,
-        rows: 3,
-      ));
-    enemy.add(EnemySetting()
-      ..life = 80
-      ..speed = 100
-      ..scale = 1.1
-      ..spriteSheet = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('enemy/enemyC.png'),
-        columns: 2,
-        rows: 3,
-      ));
-    enemy.add(EnemySetting()
-      ..life = 300
-      ..speed = 40
-      ..scale = 1.5
-      ..spriteSheet = SpriteSheet.fromColumnsAndRows(
-        image: await images.load('enemy/enemyD.png'),
-        columns: 2,
-        rows: 3,
-      ));
-  }
 }

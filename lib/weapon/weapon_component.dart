@@ -8,8 +8,7 @@ import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/radar.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
 import 'package:freedefense/game/game_controller.dart';
-
-import '../game/game_setting.dart';
+import 'package:freedefense/weapon/weapon_setting.dart';
 
 class SmartRotateEffect extends RotateEffect {
   Function? onComplete;

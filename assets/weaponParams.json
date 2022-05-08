@@ -21,7 +21,12 @@
     "rangeDelta": 1.25,
     "fireIntervalDelta": 2.0,
     "rotateSpeedDelta": 1.25,
-    "bulletSpeedDelta": 1.0
+    "bulletSpeedDelta": 1.0,
+    "explosionImage": "weapon/explosion1.png",
+    "columns": 8,
+    "rows": 8,
+    "explosionTimeStep": 1.5,
+    "expFrame" : [[0.0,4.0], [1.0,4.0], [2.0,4.0], [3.0,4.0], [4.0,4.0], [5.0,4.0], [6.0,4.0], [7.0,4.0]]
   },
   {
     "label": "MG",
@@ -45,7 +50,12 @@
     "rangeDelta": 1.25,
     "fireIntervalDelta": 1.5,
     "rotateSpeedDelta": 1.25,
-    "bulletSpeedDelta": 1.0
+    "bulletSpeedDelta": 1.0,
+    "explosionImage": "weapon/explosion2.png",
+    "columns": 6,
+    "rows": 1,
+    "explosionTimeStep": 0.05,
+    "expFrame" : [[0.0,0.0], [0.0,1.0], [0.0,2.0], [0.0,3.0], [0.0,4.0], [0.0,5.0]]
   },
   {
     "label": "MISSILE",
@@ -69,6 +79,11 @@
     "rangeDelta": 1.5,
     "fireIntervalDelta": 2.0,
     "rotateSpeedDelta": 1.5,
-    "bulletSpeedDelta": 2.0
+    "bulletSpeedDelta": 2.0,
+    "explosionImage": "weapon/explosion3.png",
+    "columns": 5,
+    "rows": 3,
+    "explosionTimeStep": 0.1,
+    "expFrame" : [[0.0,0.0], [0.5,3.0], [1.0,0.0], [1.5,3.0], [2.0,0.0], [2.5,3.0]]
   }
 ]
