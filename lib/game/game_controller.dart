@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
-import 'package:flame/assets.dart';
+
+import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/radar.dart';

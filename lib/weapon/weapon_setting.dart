@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
-import 'dart:ui';
 
-import 'package:flame/assets.dart';
+import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
@@ -121,7 +120,7 @@ class WeaponSettingV1 {
 
       double explosionTimeStep = weaponParam['explosionTimeStep'];
       w.createExpolosionAnimation(expFrame, explosionTimeStep);
-      weapon.add(w);;
+      weapon.add(w);
     }
   }
 }

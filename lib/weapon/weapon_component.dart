@@ -11,7 +11,7 @@ import 'package:freedefense/game/game_controller.dart';
 import 'package:freedefense/weapon/weapon_setting.dart';
 
 class SmartRotateEffect extends RotateEffect {
-  Function? onComplete;
+  Function()? onComplete;
   SmartRotateEffect.to(double angle, EffectController controller)
       : _destinationAngle = angle,
         super.by(0, controller);
@@ -55,10 +55,10 @@ class BarrelComponent extends GameComponent {
   BarrelComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size, priority: 21);
   double rotateSpeed = 6.0; /* radians/second */
-  double rotateTo(double radians, Function onComplete) {
+  double rotateTo(double radians, Function()? onComplete) {
     double duration = (radians - angle).abs() / rotateSpeed;
     if (duration <= 0) {
-      onComplete.call();
+      onComplete?.call();
       return 0;
     }
     add(
