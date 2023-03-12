@@ -1,5 +1,4 @@
-
-import 'package:flame/assets.dart';
+import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 
 class NeutualSetting {

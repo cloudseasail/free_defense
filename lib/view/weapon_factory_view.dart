@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:freedefense/base/game_component.dart';
@@ -101,7 +103,7 @@ class SingleWeaponView extends GameComponent with Tappable {
   late WeaponComponent weapon;
   late MineView mine;
   @override
-  Future<void>? onLoad() {
+  FutureOr<void>? onLoad() {
     Vector2 base = gameSetting.mapTileSize * 0.9;
     Vector2 center = size / 2, wp, ws, mp, ms;
     if (size.x >= size.y) {

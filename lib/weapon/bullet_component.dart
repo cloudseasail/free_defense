@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/movable.dart';
@@ -15,7 +17,7 @@ class BulletComponent extends GameComponent
   }) : super(position: position, size: size, priority: 50);
 
   @override
-  Future<void>? onLoad() {
+  FutureOr<void>? onLoad() {
     radarOn = true;
     radarRange = (size.x + size.y) / 4;
     radarScanAlert = onHitEnemy;
