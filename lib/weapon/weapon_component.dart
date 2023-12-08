@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/input.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/radar.dart';
@@ -76,8 +76,7 @@ class BarrelComponent extends GameComponent {
   }
 }
 
-class WeaponComponent extends GameComponent
-    with Tappable, Radar<EnemyComponent> {
+class WeaponComponent extends GameComponent with TapCallbacks, Radar<EnemyComponent> {
   late WeaponType weaponType;
   late double range;
   late double fireInterval;
@@ -123,11 +122,7 @@ class WeaponComponent extends GameComponent
 
   void coolDown(double period) {
     radarOn = false;
-    add(TimerComponent(
-        period: period,
-        repeat: false,
-        removeOnFinish: true,
-        onTick: () => radarOn = true));
+    add(TimerComponent(period: period, repeat: false, removeOnFinish: true, onTick: () => radarOn = true));
   }
 
   void upgradeBarrel() {
@@ -191,7 +186,7 @@ class WeaponComponent extends GameComponent
         canvas.drawRect(size.toRect(), Paint()..color = color!.withOpacity(0.3));
         canvas.drawCircle(
             (size / 2).toOffset(),
-            range*1.25,
+            range * 1.25,
             Paint()
               ..style = PaintingStyle.stroke
               ..color = Colors.green);
@@ -202,7 +197,7 @@ class WeaponComponent extends GameComponent
   }
 
   @override
-  bool onTapDown(TapDownInfo event) {
+  bool onTapDown(TapDownEvent event) {
     if (buildDone == false) {
       if (buildAllowed) {
         gameRef.gameController.send(this, GameControl.WEAPON_BUILD_DONE);

@@ -1,4 +1,4 @@
-import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/game/game_controller.dart';
@@ -7,7 +7,7 @@ import 'package:freedefense/map/map_controller.dart';
 import 'package:freedefense/view/gamebar_view.dart';
 import 'package:freedefense/view/weapon_factory_view.dart';
 
-class GameMain extends FlameGame with HasTappables {
+class GameMain extends FlameGame with TapCallbacks {
   late MapController mapController;
   late WeaponFactoryView weaponFactory;
   late GameController gameController;
@@ -44,13 +44,9 @@ class GameMain extends FlameGame with HasTappables {
     await setting.neutual.load();
 
     mapController = MapController(
-        tileSize: setting.mapTileSize,
-        mapGrid: setting.mapGrid,
-        position: setting.mapPosition,
-        size: setting.mapSize);
+        tileSize: setting.mapTileSize, mapGrid: setting.mapGrid, position: setting.mapPosition, size: setting.mapSize);
     /*game controller should have same range as map */
-    gameController =
-        GameController(position: setting.mapPosition, size: setting.mapSize);
+    gameController = GameController(position: setting.mapPosition, size: setting.mapSize);
 
     gamebarView = GamebarView();
     weaponFactory = WeaponFactoryView();

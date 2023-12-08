@@ -5,10 +5,8 @@ import 'package:flame/components.dart';
 import 'package:freedefense/base/game_ref.dart';
 import 'package:freedefense/game/game_main.dart';
 
-class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
+class GameComponent extends SpriteAnimationComponent with GameRef<GameMain> {
   Sprite? sprite;
-  SpriteAnimation? animation;
-  bool? playing = true;
 
   // set sprite(Sprite s) => this.sprite = s;
 
@@ -36,21 +34,21 @@ class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
       overridePaint: paint,
     );
 
-    animation?.getSprite().render(
-          canvas,
-          size: size,
-          overridePaint: paint,
-        );
+    sprite?.render(
+      canvas,
+      size: size,
+      overridePaint: paint,
+    );
     super.render(canvas);
   }
-
-  @override
-  void update(double dt) {
-    if ((animation != null) && playing!) {
-      animation!.update(dt);
-    }
-    super.update(dt);
-  }
+  //
+  // @override
+  // void update(double dt) {
+  //   if ((animation != null) && playing!) {
+  //     animation!.update(dt);
+  //   }
+  //   super.update(dt);
+  // }
 
   double angleNearTo(Vector2 target) {
     double distance = position.distanceTo(target);

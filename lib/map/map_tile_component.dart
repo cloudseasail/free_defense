@@ -1,13 +1,14 @@
 import 'package:flame/components.dart';
-import 'package:flame/input.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/game/game_controller.dart';
 
 enum MapTileBuildStatus { Empty, BuildPreview, BuildDone }
+
 enum MapTileBuildEvent { None, BuildPreview, BuildDone, BuildCancel }
 
-class MapTileComponent extends GameComponent with Tappable {
+class MapTileComponent extends GameComponent with TapCallbacks {
   MapTileBuildStatus buildStatus = MapTileBuildStatus.Empty;
   GameComponent? refComponent;
   bool ableToBuild = true;
@@ -33,7 +34,7 @@ class MapTileComponent extends GameComponent with Tappable {
   }
 
   @override
-  bool onTapDown(TapDownInfo event) {
+  bool onTapDown(TapDownEvent event) {
     gameRef.gameController.send(this, GameControl.WEAPON_BUILDING);
     return false;
   }
