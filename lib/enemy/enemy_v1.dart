@@ -5,6 +5,8 @@ import 'package:flame/sprite.dart';
 import 'package:freedefense/game/game_setting.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
 
+import 'enemy_setting.dart';
+
 GameSetting setting = GameSetting();
 
 class EnemyV1 extends EnemyComponent {
