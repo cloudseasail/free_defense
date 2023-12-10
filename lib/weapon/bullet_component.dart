@@ -52,12 +52,4 @@ class ExplosionComponent extends GameComponent {
     required Vector2 position,
     required Vector2 size,
   }) : super(position: position, size: size, priority: 55);
-  // set animation(SpriteAnimationTicker? a) {
-  //   if (a == null) {
-  //     this.removeFromParent();
-  //   }
-  //   super.animation = a;
-  //   this.animation!.onComplete = this.removeFromParent;
-  //   // this.debugMode = true;
-  // }
 }

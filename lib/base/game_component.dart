@@ -14,11 +14,7 @@ class GameComponent extends SpriteAnimationComponent with GameRef<GameMain> {
     Vector2? position,
     Vector2? size,
     int? priority,
-  }) : super(
-            position: position,
-            size: size,
-            priority: priority,
-            anchor: Anchor.center);
+  }) : super(position: position, size: size, priority: priority, anchor: Anchor.center, removeOnFinish: true);
 
   bool active = true;
   get length => (size.x + size.y) / 2;
@@ -41,14 +37,6 @@ class GameComponent extends SpriteAnimationComponent with GameRef<GameMain> {
     );
     super.render(canvas);
   }
-  //
-  // @override
-  // void update(double dt) {
-  //   if ((animation != null) && playing!) {
-  //     animation!.update(dt);
-  //   }
-  //   super.update(dt);
-  // }
 
   double angleNearTo(Vector2 target) {
     double distance = position.distanceTo(target);
@@ -60,7 +48,7 @@ class GameComponent extends SpriteAnimationComponent with GameRef<GameMain> {
     return radians;
   }
 
-  Vector2 positionInPrarent(Vector2 point) {
+  Vector2 positionInParent(Vector2 point) {
     return point + position;
   }
 }
