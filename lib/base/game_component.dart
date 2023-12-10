@@ -5,10 +5,8 @@ import 'package:flame/components.dart';
 import 'package:freedefense/base/game_ref.dart';
 import 'package:freedefense/game/game_main.dart';
 
-class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
+class GameComponent extends SpriteAnimationComponent with GameRef<GameMain> {
   Sprite? sprite;
-  SpriteAnimation? animation;
-  bool? playing = true;
 
   // set sprite(Sprite s) => this.sprite = s;
 
@@ -16,11 +14,7 @@ class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
     Vector2? position,
     Vector2? size,
     int? priority,
-  }) : super(
-            position: position,
-            size: size,
-            priority: priority,
-            anchor: Anchor.center);
+  }) : super(position: position, size: size, priority: priority, anchor: Anchor.center, removeOnFinish: true);
 
   bool active = true;
   get length => (size.x + size.y) / 2;
@@ -36,20 +30,12 @@ class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
       overridePaint: paint,
     );
 
-    animation?.getSprite().render(
-          canvas,
-          size: size,
-          overridePaint: paint,
-        );
+    sprite?.render(
+      canvas,
+      size: size,
+      overridePaint: paint,
+    );
     super.render(canvas);
-  }
-
-  @override
-  void update(double dt) {
-    if ((animation != null) && playing!) {
-      animation!.update(dt);
-    }
-    super.update(dt);
   }
 
   double angleNearTo(Vector2 target) {
@@ -62,7 +48,7 @@ class GameComponent extends PositionComponent with GameRef<GameMain>, HasPaint {
     return radians;
   }
 
-  Vector2 positionInPrarent(Vector2 point) {
+  Vector2 positionInParent(Vector2 point) {
     return point + position;
   }
 }

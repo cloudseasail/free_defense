@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/game/game_controller.dart';
@@ -25,11 +26,9 @@ class WeaponFactoryView extends GameComponent {
 
   WeaponFactoryView()
       : super(
-            position: Vector2(
-                gameSetting.viewSize.x * (1 / 3), gameSetting.viewPosition.y),
+            position: Vector2(gameSetting.viewSize.x * (1 / 3), gameSetting.viewPosition.y),
             size: Vector2(
-                gameSetting.viewSize.x * (2 / 3) - gameSetting.mapTileSize.x,
-                gameSetting.viewSize.y * (2 / 3)));
+                gameSetting.viewSize.x * (2 / 3) - gameSetting.mapTileSize.x, gameSetting.viewSize.y * (2 / 3)));
 
   List<SingleWeaponView> weapons = [];
 
@@ -77,11 +76,8 @@ class WeaponFactoryView extends GameComponent {
   }
 }
 
-class SingleWeaponView extends GameComponent with Tappable {
-  SingleWeaponView(
-      {required Vector2 position,
-      required Vector2 size,
-      required this.weaponType})
+class SingleWeaponView extends GameComponent with TapCallbacks {
+  SingleWeaponView({required Vector2 position, required Vector2 size, required this.weaponType})
       : super(position: position, size: size) {
     _baseCost = GameSetting().weapons.weapon[weaponType.index].cost;
     costDelta = _baseCost * 0.2;
@@ -170,7 +166,7 @@ class SingleWeaponView extends GameComponent with Tappable {
   }
 
   @override
-  bool onTapDown(TapDownInfo event) {
+  bool onTapDown(TapDownEvent event) {
     if (selected) {
       gameRef.gameController.send(this, GameControl.WEAPON_SHOW_PROFILE);
     } else {
