@@ -51,12 +51,9 @@ class WeaponSetting {
     rotateSpeed = pi * weaponParam['rotateSpeed'];
     bulletSpeed = tileSize * weaponParam['bulletSpeed'];
     currentBulletSpeed = bulletSpeed;
-    size = gameSetting
-        .scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
-    bulletSize = gameSetting.scaleOnMapTile(
-        Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
-    explosionSize = gameSetting.scaleOnMapTile(
-        Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
+    size = gameSetting.scaleOnMapTile(Vector2(weaponParam['sizeX'], weaponParam['sizeY']));
+    bulletSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['bulletSizeX'], weaponParam['bulletSizeY']));
+    explosionSize = gameSetting.scaleOnMapTile(Vector2(weaponParam['explosionSizeX'], weaponParam['explosionSizeY']));
     tower = weaponTower;
     paths[0] = 'weapon/${weaponParam['barrelImg0']}.png';
     paths[1] = 'weapon/${weaponParam['barrelImg1']}.png';
@@ -64,8 +61,7 @@ class WeaponSetting {
     barrel[0] = Sprite(await images.load(paths[0]));
     barrel[1] = Sprite(await images.load(paths[1]));
     barrel[2] = Sprite(await images.load(paths[2]));
-    bullet =
-        Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
+    bullet = Sprite(await images.load('weapon/${weaponParam['bulletImg']}.png'));
 
     damageDelta = weaponParam['damageDelta'];
     rangeDelta = weaponParam['rangeDelta'];
@@ -76,8 +72,7 @@ class WeaponSetting {
 
   void createExpolosionAnimation(List<Vector2> frameLocation, double stepTime) {
     List<Sprite> sprites = [];
-    frameLocation.forEach(
-        (v) => sprites.add(explosion.getSprite(v.x.toInt(), v.y.toInt())));
+    frameLocation.forEach((v) => sprites.add(explosion.getSprite(v.x.toInt(), v.y.toInt())));
     explosionSprites = sprites;
     // explosionAnimation =
     //     SpriteAnimation.spriteList(sprites, stepTime: stepTime, loop: false);
