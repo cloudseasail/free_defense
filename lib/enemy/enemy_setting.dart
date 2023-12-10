@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flame/assets.dart';
+import 'package:flame/cache.dart';
 import 'package:flame/sprite.dart';
 
 import '../game/game_setting.dart';

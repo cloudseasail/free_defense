@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/input.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
 import 'package:freedefense/base/radar.dart';
@@ -11,7 +11,7 @@ import 'package:freedefense/game/game_controller.dart';
 import 'package:freedefense/weapon/weapon_setting.dart';
 
 class SmartRotateEffect extends RotateEffect {
-  Function? onComplete;
+  Function()? onComplete;
   SmartRotateEffect.to(double angle, EffectController controller)
       : _destinationAngle = angle,
         super.by(0, controller);
@@ -55,10 +55,10 @@ class BarrelComponent extends GameComponent {
   BarrelComponent({required Vector2 position, required Vector2 size})
       : super(position: position, size: size, priority: 21);
   double rotateSpeed = 6.0; /* radians/second */
-  double rotateTo(double radians, Function onComplete) {
+  double rotateTo(double radians, Function()? onComplete) {
     double duration = (radians - angle).abs() / rotateSpeed;
     if (duration <= 0) {
-      onComplete.call();
+      onComplete?.call();
       return 0;
     }
     add(
@@ -76,8 +76,7 @@ class BarrelComponent extends GameComponent {
   }
 }
 
-class WeaponComponent extends GameComponent
-    with Tappable, Radar<EnemyComponent> {
+class WeaponComponent extends GameComponent with TapCallbacks, Radar<EnemyComponent> {
   late WeaponType weaponType;
   late double range;
   late double fireInterval;
@@ -123,11 +122,7 @@ class WeaponComponent extends GameComponent
 
   void coolDown(double period) {
     radarOn = false;
-    add(TimerComponent(
-        period: period,
-        repeat: false,
-        removeOnFinish: true,
-        onTick: () => radarOn = true));
+    add(TimerComponent(period: period, repeat: false, removeOnFinish: true, onTick: () => radarOn = true));
   }
 
   void upgradeBarrel() {
@@ -191,7 +186,7 @@ class WeaponComponent extends GameComponent
         canvas.drawRect(size.toRect(), Paint()..color = color!.withOpacity(0.3));
         canvas.drawCircle(
             (size / 2).toOffset(),
-            range*1.25,
+            range * 1.25,
             Paint()
               ..style = PaintingStyle.stroke
               ..color = Colors.green);
@@ -202,7 +197,7 @@ class WeaponComponent extends GameComponent
   }
 
   @override
-  bool onTapDown(TapDownInfo event) {
+  bool onTapDown(TapDownEvent event) {
     if (buildDone == false) {
       if (buildAllowed) {
         gameRef.gameController.send(this, GameControl.WEAPON_BUILD_DONE);

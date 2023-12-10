@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:freedefense/base/game_component.dart';
@@ -26,7 +28,7 @@ class GamebarView extends GameComponent {
   int _lives = 20;
 
   @override
-  Future<void>? onLoad() {
+  FutureOr<void>? onLoad() {
     waveStatus = TextComponent(
       textRenderer: TextPaint(
           style: const TextStyle(color: Colors.white70, fontSize: 22)),
