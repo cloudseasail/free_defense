@@ -31,6 +31,7 @@ class EnemyV1 extends EnemyComponent {
   Future<void>? onLoad() {
     super.onLoad();
     setLiveAnimation();
+    return null;
   }
 
   void onKilled() {
