@@ -13,7 +13,7 @@ class AstarNode {
   late double g;
   late double f;
 
-  AstarNode(this.x, this.y, {this.parent, double cost: 0.0}) {
+  AstarNode(this.x, this.y, {this.parent, double cost = 0.0}) {
     g = (parent != null ? parent!.g : 0) + cost;
   }
 

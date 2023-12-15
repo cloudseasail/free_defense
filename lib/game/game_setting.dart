@@ -1,10 +1,10 @@
-import 'package:flame/components.dart';
 import 'dart:math' as math;
 
+import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
 
 import '../enemy/enemy_setting.dart';
-import '../neutual/neutral_setting.dart';
+import '../neutral/neutral_setting.dart';
 import '../weapon/weapon_setting.dart';
 
 GameSetting gameSetting = GameSetting();
@@ -20,7 +20,7 @@ class GameSetting {
 
   EnemySettingV1 enemies = EnemySettingV1();
   WeaponSettingV1 weapons = WeaponSettingV1();
-  NeutualSetting neutual = NeutualSetting();
+  NeutralSetting neutral = NeutralSetting();
 
   Vector2 mapGrid = Vector2(10, 10);
   late Vector2 mapPosition;
@@ -62,8 +62,7 @@ class GameSetting {
     enemySpawn = Vector2(0, 0) + (mapTileSize / 2);
     enemyTarget = (mapSize) - (mapTileSize / 2);
 
-    print(
-        'screenSize $screenSize,  mapGrid $mapGrid, mapTileSize $mapTileSize');
+    print('screenSize $screenSize,  mapGrid $mapGrid, mapTileSize $mapTileSize');
   }
 
   void optimizeMapGrid(Vector2 size) {
@@ -81,13 +80,12 @@ class GameSetting {
     mapPosition = Vector2(size.x / 2, size.y / 2);
     mapSize = Vector2(size.x - 2, size.y - barSize.y - viewSize.y - 2);
     mapGrid = mapSize / grid;
-    mapGrid =
-        Vector2(mapGrid.x.toInt().toDouble(), mapGrid.y.toInt().toDouble());
+    mapGrid = Vector2(mapGrid.x.toInt().toDouble(), mapGrid.y.toInt().toDouble());
     mapTileSize = dotDivide(mapSize, mapGrid);
   }
 
   Future<void> onLoad() async {
-    await neutual.load();
+    await neutral.load();
     await weapons.load(gameSetting);
     await enemies.load();
   }
