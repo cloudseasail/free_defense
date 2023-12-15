@@ -41,7 +41,7 @@ class GameMain extends FlameGame with TapCallbacks {
     await super.onLoad();
 
     // await setting.onLoad();
-    await setting.neutual.load();
+    await setting.neutral.load();
 
     mapController = MapController(
         tileSize: setting.mapTileSize, mapGrid: setting.mapGrid, position: setting.mapPosition, size: setting.mapSize);

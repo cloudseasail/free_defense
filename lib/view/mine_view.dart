@@ -27,24 +27,16 @@ class MineView extends GameComponent {
   Future<void>? onLoad() async {
     await super.onLoad();
     if (size.x > size.y) {
-      icon = GameComponent(
-          position: (size / 2)..x = size.x * (1 / 3),
-          size: Vector2(size.y, size.x * (2 / 3)));
+      icon = GameComponent(position: (size / 2)..x = size.x * (1 / 3), size: Vector2(size.y, size.x * (2 / 3)));
       text = TextComponent(
-          position: (size / 2)..x = size.x * (5 / 6),
-          textRenderer: TextPaint(style: _style),
-          anchor: Anchor.center);
+          position: (size / 2)..x = size.x * (5 / 6), textRenderer: TextPaint(style: _style), anchor: Anchor.center);
     } else {
-      icon = GameComponent(
-          position: (size / 2)..y = size.y * (1 / 3),
-          size: Vector2(size.x, size.y * (2 / 3)));
+      icon = GameComponent(position: (size / 2)..y = size.y * (1 / 3), size: Vector2(size.x, size.y * (2 / 3)));
       text = TextComponent(
-          position: (size / 2)..y = size.y * (5 / 6),
-          textRenderer: TextPaint(style: _style),
-          anchor: Anchor.center);
+          position: (size / 2)..y = size.y * (5 / 6), textRenderer: TextPaint(style: _style), anchor: Anchor.center);
     }
 
-    icon.sprite = GameSetting().neutual.mine;
+    icon.sprite = GameSetting().neutral.mine;
     number = 0;
     add(icon);
     add(text!);

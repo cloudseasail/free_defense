@@ -9,10 +9,11 @@ import 'package:freedefense/base/scanable.dart';
 import 'package:freedefense/enemy/enemy_component.dart';
 import 'package:freedefense/enemy/enemy_factory.dart';
 import 'package:freedefense/game/game_setting.dart';
-import 'package:freedefense/neutual/neutual_component.dart';
 import 'package:freedefense/view/weapon_factory_view.dart';
 import 'package:freedefense/view/weaponview_widget.dart';
 import 'package:freedefense/weapon/weapon_component.dart';
+
+import '../neutral/neutual_component.dart';
 
 GameSetting gameSetting = GameSetting();
 
@@ -40,8 +41,7 @@ class GameInstruction {
     switch (instruction) {
       case GameControl.WEAPON_BUILDING:
         WeaponViewWidget.hide();
-        WeaponComponent? component =
-            controller.gameRef.weaponFactory.buildWeapon(this.source.position);
+        WeaponComponent? component = controller.gameRef.weaponFactory.buildWeapon(this.source.position);
         if (component != null) {
           controller.add(component);
           controller.buildingWeapon?.removeFromParent();
@@ -55,8 +55,7 @@ class GameInstruction {
         WeaponViewWidget.hide();
         controller.gameRef.weaponFactory.select(source as SingleWeaponView);
         if (controller.buildingWeapon != null) {
-          controller.send(
-              controller.buildingWeapon!, GameControl.WEAPON_BUILDING);
+          controller.send(controller.buildingWeapon!, GameControl.WEAPON_BUILDING);
         }
         break;
       case GameControl.WEAPON_BUILD_DONE:
@@ -69,8 +68,7 @@ class GameInstruction {
       case GameControl.WEAPON_DESTROYED:
         WeaponViewWidget.hide();
         controller.gameRef.weaponFactory.onDestroy(source as WeaponComponent);
-        controller.gameRef.mapController
-            .astarMapRemoveObstacle(source.position);
+        controller.gameRef.mapController.astarMapRemoveObstacle(source.position);
         controller.processEnemySmartMove();
         break;
       case GameControl.ENEMY_SPAWN:
@@ -129,10 +127,8 @@ class GameController extends GameComponent {
 
   /* Process Routine */
   void processRadarScan() {
-    Iterable<Component> radars =
-        children.where((e) => e is Radar && e.radarOn).cast();
-    Iterable<Component> scanbles =
-        children.where((e) => e is Scanable && e.scanable).cast();
+    Iterable<Component> radars = children.where((e) => e is Radar && e.radarOn).cast();
+    Iterable<Component> scanbles = children.where((e) => e is Scanable && e.scanable).cast();
 
     radars.forEach((element) {
       (element as Radar).radarScan(scanbles);
@@ -140,20 +136,20 @@ class GameController extends GameComponent {
   }
 
   void processEnemySmartMove() {
-    Iterable<Component> enemies =
-        children.where((e) => e is EnemyComponent && e.active).cast();
+    Iterable<Component> enemies = children.where((e) => e is EnemyComponent && e.active).cast();
     enemies.forEach((element) {
       (element as EnemyComponent).moveSmart(gateEnd.position);
     });
   }
 
   /* Load Initialization */
-  late NeutualComponent gateStart;
-  late NeutualComponent gateEnd;
+  late NeutralComponent gateStart;
+  late NeutralComponent gateEnd;
   @override
   Future<void>? onLoad() {
     super.onLoad();
     loadGate();
+    return null;
   }
 
   void loadGate() async {
@@ -163,33 +159,19 @@ class GameController extends GameComponent {
     Vector2 start, end;
 
     if (rndx < rndy) {
-      start = Vector2(0,
-          (Random().nextDouble() * gameSetting.mapGrid.y).toInt().toDouble());
-      end = Vector2(gameSetting.mapGrid.x - 1,
-          (Random().nextDouble() * gameSetting.mapGrid.y).toInt().toDouble());
+      start = Vector2(0, (Random().nextDouble() * gameSetting.mapGrid.y).toInt().toDouble());
+      end = Vector2(gameSetting.mapGrid.x - 1, (Random().nextDouble() * gameSetting.mapGrid.y).toInt().toDouble());
     } else {
-      start = Vector2(
-          (Random().nextDouble() * gameSetting.mapGrid.x).toInt().toDouble(),
-          0);
-      end = Vector2(
-          (Random().nextDouble() * gameSetting.mapGrid.x).toInt().toDouble(),
-          gameSetting.mapGrid.y - 1);
+      start = Vector2((Random().nextDouble() * gameSetting.mapGrid.x).toInt().toDouble(), 0);
+      end = Vector2((Random().nextDouble() * gameSetting.mapGrid.x).toInt().toDouble(), gameSetting.mapGrid.y - 1);
     }
-    start = gameSetting.dotMultiple(start, gameSetting.mapTileSize) +
-        (gameSetting.mapTileSize / 2);
-    end = gameSetting.dotMultiple(end, gameSetting.mapTileSize) +
-        (gameSetting.mapTileSize / 2);
+    start = gameSetting.dotMultiple(start, gameSetting.mapTileSize) + (gameSetting.mapTileSize / 2);
+    end = gameSetting.dotMultiple(end, gameSetting.mapTileSize) + (gameSetting.mapTileSize / 2);
 
     final images = Images();
-    gateStart = NeutualComponent(
-        position: start,
-        size: gameSetting.mapTileSize,
-        neutualType: NeutualType.GATE_START)
+    gateStart = NeutralComponent(position: start, size: gameSetting.mapTileSize, neutualType: NeutralType.GATE_START)
       ..sprite = Sprite(await images.load('blackhole.png'));
-    gateEnd = NeutualComponent(
-        position: end,
-        size: gameSetting.mapTileSize,
-        neutualType: NeutualType.GATE_END)
+    gateEnd = NeutralComponent(position: end, size: gameSetting.mapTileSize, neutualType: NeutralType.GATE_END)
       ..sprite = Sprite(await images.load('whitehole.png'));
     add(gateStart);
     add(gateEnd);

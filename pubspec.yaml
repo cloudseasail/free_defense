@@ -19,7 +19,7 @@ flutter:
   assets:
     - assets/images/weapon/
     - assets/images/enemy/
-    - assets/images/neutual/
+    - assets/images/neutral/
     - assets/images/
     - assets/weaponParams.json
     - assets/enemyParams.json

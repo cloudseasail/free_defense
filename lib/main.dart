@@ -39,8 +39,7 @@ Widget _pauseMenuBuilder(BuildContext buildContext, GameMain game) {
     child: Center(
         child: TextButton(
       style: TextButton.styleFrom(
-        padding: const EdgeInsets.all(16.0),
-        primary: Colors.white,
+        foregroundColor: Colors.white, padding: const EdgeInsets.all(16.0),
         textStyle: const TextStyle(fontSize: 20),
       ),
       onPressed: () {
@@ -61,8 +60,7 @@ Widget _gameOverBuilder(BuildContext buildContext, GameMain game) {
         child: Center(
             child: TextButton(
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.all(16.0),
-                primary: Colors.white,
+                foregroundColor: Colors.white, padding: const EdgeInsets.all(16.0),
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
