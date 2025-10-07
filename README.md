@@ -31,3 +31,23 @@ Controls:
     - [ ] Medal system
  
 
+
+
+
+## Troubleshooting: Windows CMake cache/source mismatch
+
+If you hit an error similar to:
+
+CMake Error: The current CMakeCache.txt directory F:/.../build/windows/x64/CMakeCache.txt is different than the directory C:/.../build/windows/x64 where CMakeCache.txt was created. This may result in binaries being created in the wrong place.
+
+This happens when the project is moved between different folders or drives and the previously generated CMake cache still points to the old path. To fix:
+
+- Run the cleanup script that removes stale Windows build artifacts:
+  - PowerShell: powershell -ExecutionPolicy Bypass -File .\scripts\clean_windows_build.ps1
+  - CMD: scripts\clean_windows_build.bat
+- Then regenerate build files:
+  - flutter clean
+  - flutter pub get
+  - flutter build windows
+
+The script deletes build\windows, build\win32, and windows\flutter\ephemeral so CMake and Flutter regenerate fresh build files for the current path.
